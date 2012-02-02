@@ -1,0 +1,62 @@
+Hunger Games Plugin
+Marco Herrero <hielo.helado@gmail.com>
+
+Características:
+
+	X Juagadores, Y Masters.
+	Terreno de juego amplio, pero limitado.
+	No existe puntuación por matar a nadie, solo por sobrevivir el último
+	Todos los jugadores empiezan a x bloques del central, donde habrá una estructura [1].
+	El movimiento está desactivado hasta que comience el juego.
+	Cada vez que un jugador muere, es eliminado [2]
+	El último vivo gana.
+
+	No permite nuevos jugadores una vez que el juego ha empezado.
+
+	[1] Estructura central
+		Contendrá diferentes materiales y objetos útiles para los jugadores
+		El valor del objeto aumenta la dificultad de conseguirlo.
+			Una espada de acero estará mas profunda en la estructura que una de piedra.
+		Los jugadores deben decidir si pelean por la estructura o abandonan el lugar
+		
+	[2] Eliminacion
+		Cada vez que un jugador muera, se informará en el chat que ha habido una muerte.
+		Al inicio de cada día, se informará quienes son los jugadores muertos.
+		Habrá una plataforma central elevada, donde son teleportados los jugadores muertos. 
+		No pueden abandonarla mientras dure el juego.
+	
+	[3] Incitación a la lucha mediante recompensas.
+		Existirá un altar de regalos, donde aparecerán regalos periódicamente. 
+		Se informará a que hora aparecerán, pero no cual es el contenido (quizás se den pistas)
+	
+	[4] Mapa random vs Mapa custom
+		Se puede jugar tanto con un mapa aleatorio limitado como con un mapa creado de antemano
+		En el caso del mapa creado de antemano, se pueden incluir trampas. 
+		El creador del mapa, como es obvio, no puede jugar (sabe donde están las trampas, etc)
+	
+	[5] MASTER
+		Existirá un master que controle la partida
+		Se encarga de crear regalos, a una hora determinada (preferiblemente amanecer, anochecer)
+			Amanecer, anochecer evita la necesidad de llevar un reloj, pero no evita el tener que
+			permanecer en la superficie
+		Modo fantasma/espectador:
+			Permanece invisible
+			Puede volar
+			No activa bloques/trampas
+			Puede atravesar bloques (?)
+			Tiene acceso a mapa dinámico
+		Puede eliminar zonas de juego, cubriéndolas con lava.
+	[6] Otros
+		Juego pausable, los jugadores retoman el juego donde estaban y como estaban.
+		
+Implementacion básica:
+
+	El de arriba es el plugin completo, mientras que este será la primera versión jugable, para
+	que no haya que esperar todo el desarrollo.
+	Caracteristicas:
+		X Jugadores, sin master.
+		Mapa random.
+		No hay recompensas.
+		Eliminacion haciendo kick
+		Sin estructura central
+		Anuncia los muertos en su momento. (Intentar que no anuncie el asesino)
