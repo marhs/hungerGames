@@ -4,13 +4,16 @@ import java.util.logging.Logger;
 
 import org.bukkit.command.*;
 import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class hungerGames extends JavaPlugin{
-	
-	Logger log = Logger.getLogger("Minecraft");
+	public HungerGame hg;
+	private Logger log = Logger.getLogger("Minecraft");
 	
     public void onEnable() { 
+        getServer().getPluginManager().registerEvents(new HungerListener(this), this);
     	log.info("[Hunger Games] ready!");
     }
      
@@ -19,6 +22,10 @@ public class hungerGames extends JavaPlugin{
 
     }
     
+    @EventHandler
+    public void muerteJugador(PlayerDeathEvent event) {
+    	// Some code here
+    }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
     	
@@ -31,9 +38,8 @@ public class hungerGames extends JavaPlugin{
     		if(args.length != 0) {
     			if(args[0].equalsIgnoreCase("start")){
     				player.sendMessage("Starting Hunger Games");
-    				HungerGame hg = new HungerGame(this.getServer().getOnlinePlayers());
+    				hg = new HungerGame(this.getServer().getOnlinePlayers());
     				hg.startGame();
-    				hg.finish();
     			} else
     			if(args[0].equalsIgnoreCase("stop")) {
     				player.sendMessage("Stopping Hunger Games");
