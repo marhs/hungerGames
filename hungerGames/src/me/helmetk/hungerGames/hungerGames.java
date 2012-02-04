@@ -31,7 +31,9 @@ public class hungerGames extends JavaPlugin{
     		if(args.length != 0) {
     			if(args[0].equalsIgnoreCase("start")){
     				player.sendMessage("Starting Hunger Games");
-    				// startHungerGames();
+    				HungerGame hg = new HungerGame(this.getServer().getOnlinePlayers());
+    				hg.startGame();
+    				hg.finish();
     			} else
     			if(args[0].equalsIgnoreCase("stop")) {
     				player.sendMessage("Stopping Hunger Games");
