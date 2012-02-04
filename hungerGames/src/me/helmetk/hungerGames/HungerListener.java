@@ -18,13 +18,24 @@ public class HungerListener implements Listener{
 	@EventHandler
 	public void onPlayerDeath(EntityDeathEvent event) {
 		if(event.getEntity() instanceof Player){
-			plugin.hg.muerto((Player)event.getEntity());
-			log.info("Ha muerto un " + event.getEntity().toString());
+			Player player = (Player)event.getEntity();
+			plugin.getHG().muerto(player);
+			for(Player p:plugin.getServer().getOnlinePlayers()){
+				p.sendMessage("Ha muerto un jugador");
+			}
+			player.kickPlayer("Has muerto");
 		}
 	}
+	
+	/* Nota de kick:
+	 * Para la implementaci—n que hace kick, no hace falta la lista muertos,
+	 * pero ya que planeo que los jugadores se queden en una zona especial 
+	 * del mapa (Ànether? Àplataforma? Àthe_end?), voy a mantener as’ la 
+	 * implementacion */
+	
 	@EventHandler
 	public void onPlayerLogin(PlayerJoinEvent event) {
-		if(plugin.hg.activo == true){
+		if(plugin.getHG().isActivo() == true){
 			event.getPlayer().kickPlayer("Hay un juego activo, no puedes entrar hasta que termine");
 		}
 	}
