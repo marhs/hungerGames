@@ -40,6 +40,8 @@ public class HungerGame {
 	
 	public Player getWinner() {
 		Player res = null;
+		if(vivos.size() > 1)
+			return res;
 		for(Player p:vivos){
 			res = p;
 		}
