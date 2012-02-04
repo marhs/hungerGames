@@ -15,7 +15,7 @@ public class hungerGames extends JavaPlugin{
     public void onEnable() { 
         getServer().getPluginManager().registerEvents(new HungerListener(this), this);
     	log.info("[Hunger Games] ready!");
-    	hg = new HungerGame(this.getServer().getOnlinePlayers());
+    	hg = new HungerGame(this.getServer().getOnlinePlayers(), getServer().getWorld("world").getSpawnLocation().add(0, 2, 0));
     }
      
     public void onDisable() { 
@@ -40,6 +40,7 @@ public class hungerGames extends JavaPlugin{
     			if(args[0].equalsIgnoreCase("start")){
     				player.sendMessage("Starting Hunger Games");
     				for(Player p:getServer().getOnlinePlayers()){
+    					p.teleport(hg.inicio);
     					hg.vivos.add(p);
     				}
     				hg.startGame();

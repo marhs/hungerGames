@@ -2,13 +2,15 @@ package me.helmetk.hungerGames;
 
 import java.util.*;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class HungerGame {
 	Set<Player> vivos, muertos;
 	boolean activo;
+	Location inicio;
 	
-	public HungerGame(Player[] players) {
+	public HungerGame(Player[] players, Location inicio) {
 		Set<Player> set = new HashSet<Player>();
 		Set<Player> set2 = new HashSet<Player>();
 		for(Player p:players) {
@@ -16,6 +18,7 @@ public class HungerGame {
 		}
 		this.vivos = set;
 		this.muertos = set2;
+		this.inicio = inicio;
 	}
 	
 	public void startGame() {
