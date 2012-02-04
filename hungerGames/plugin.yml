@@ -1,3 +1,9 @@
 name: hungerGames
 main: com.gmail.hielohelado.hungergames
 version: 0.1
+
+commands:
+  hungergames:
+    description: Comando de prueba
+    permission: hungerGames.hungergames
+    usage: /hungergames
