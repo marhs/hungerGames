@@ -8,10 +8,17 @@ import org.bukkit.entity.Player;
 
 public class HungerGame {
 	private Logger log = Logger.getLogger("Minecraft");
-	Set<Player> vivos, muertos;
-	boolean activo;
-	Location inicio;
+	private Set<Player> vivos, muertos;
+	private Player master;
+	private boolean activo;
+	private Map<Location, Player> inicios;
 	
+	public Player getMaster() {
+		return master;
+	}
+	public void setMaster(Player master) {
+		this.master = master;
+	}
 	public Set<Player> getVivos() {
 		return vivos;
 	}
@@ -36,27 +43,28 @@ public class HungerGame {
 		this.activo = activo;
 	}
 
-	public Location getInicio() {
-		return inicio;
+	public Map<Location, Player> getInicio() {
+		return inicios;
 	}
 
-	public void setInicio(Location inicio) {
-		this.inicio = inicio;
+	public void setInicio(Map<Location, Player> inicio) {
+		this.inicios = inicio;
 	}
 
 	public Logger getLog() {
 		return log;
 	}
 
-	public HungerGame(Player[] players, Location inicio) {
+	public HungerGame(Player[] players, Map<Location, Player> inicios) {
 		Set<Player> set = new HashSet<Player>();
 		Set<Player> set2 = new HashSet<Player>();
 		for(Player p:players) {
 			set.add(p);
 		}
+		this.activo = false;
 		this.vivos = set;
 		this.muertos = set2;
-		this.inicio = inicio;
+		this.inicios = inicios;
 	}
 	
 	public void startGame() {
@@ -100,8 +108,16 @@ public class HungerGame {
 		getVivos().addAll(getMuertos());
 		getMuertos().clear();
     	getLog().info(msg);
+    	getInicio().clear();
 		setActivo(false);
 	}
 	
-	
+	public void addInicio(Location location){
+		inicios.put(location, null);
+		master.sendMessage("A–adido el inicio: " + location.toString());
+	}
+	public void removeInicio(Location location){
+		inicios.remove(location);
+		master.sendMessage("Eliminado el inicio: " + location.toString());
+	}
 }
