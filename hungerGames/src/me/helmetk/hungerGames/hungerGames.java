@@ -40,7 +40,7 @@ public class hungerGames extends JavaPlugin{
     			if(args[0].equalsIgnoreCase("start")){
     				player.sendMessage("Starting Hunger Games");
     				for(Player p:getServer().getOnlinePlayers()){
-    					p.teleport(getHG().inicio);
+    					p.teleport(getHG().getInicio());
     					hg.getVivos().add(p);
     				}
     				hg.startGame();
@@ -51,7 +51,7 @@ public class hungerGames extends JavaPlugin{
     			}
 
     			if(args[0].equalsIgnoreCase("alive")) {
-    				if(getHG().activo == false) {
+    				if(getHG().isActivo() == false) {
     					player.sendMessage("No hay ningun juego activo");
     				} else {
     					String msg ="";

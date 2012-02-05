@@ -8,9 +8,9 @@ import org.bukkit.entity.Player;
 
 public class HungerGame {
 	private Logger log = Logger.getLogger("Minecraft");
-	Set<Player> vivos, muertos;
-	boolean activo;
-	Location inicio;
+	private Set<Player> vivos, muertos;
+	private boolean activo;
+	private Location inicio;
 	
 	public Set<Player> getVivos() {
 		return vivos;
