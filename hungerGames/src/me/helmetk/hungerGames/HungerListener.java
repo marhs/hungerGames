@@ -5,8 +5,6 @@ import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -19,7 +17,7 @@ public class HungerListener implements Listener{
 	}
 	@EventHandler
 	public void onPlayerDeath(EntityDeathEvent event) {
-		if(event.getEntity() instanceof Player && plugin.getHG().isActivo() == false){
+		if(event.getEntity() instanceof Player){
 			Player player = (Player)event.getEntity();
 			plugin.getHG().muerto(player);
 			for(Player p:plugin.getServer().getOnlinePlayers()){
@@ -39,22 +37,6 @@ public class HungerListener implements Listener{
 	public void onPlayerLogin(PlayerJoinEvent event) {
 		if(plugin.getHG().isActivo() == true){
 			event.getPlayer().kickPlayer("Hay un juego activo, no puedes entrar hasta que termine");
-		}
-	}
-	@EventHandler
-	public void onMasterPlaceBlock(BlockPlaceEvent event) {
-		if(!plugin.getHG().isActivo() && 
-			event.getBlockPlaced().getTypeId() == 19 && 
-			event.getPlayer().equals(plugin.getHG().getMaster())){
-			plugin.getHG().addInicio(event.getBlock().getLocation().add(0, 1, 0));
-		}
-	}
-	@EventHandler
-	public void onMasterRemoveBlock(BlockBreakEvent event) {
-		if(!plugin.getHG().isActivo() && 
-			event.getBlock().getTypeId() == 19 && 
-			event.getPlayer().equals(plugin.getHG().getMaster())){
-			plugin.getHG().removeInicio(event.getBlock().getLocation().add(0, 1, 0));
 		}
 	}
 	

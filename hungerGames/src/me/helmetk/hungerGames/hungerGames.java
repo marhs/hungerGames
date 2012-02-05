@@ -1,11 +1,7 @@
 package me.helmetk.hungerGames;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Logger;
 
-import org.bukkit.Location;
 import org.bukkit.command.*;
 import org.bukkit.entity.*;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,8 +13,7 @@ public class hungerGames extends JavaPlugin{
     public void onEnable() { 
         getServer().getPluginManager().registerEvents(new HungerListener(this), this);
     	log.info("[Hunger Games] ready!");
-    	Map<Location, Player> locations = new HashMap<Location, Player>();
-    	hg = new HungerGame(this.getServer().getOnlinePlayers(), locations);
+    	hg = new HungerGame(this.getServer().getOnlinePlayers(), getServer().getWorld("world").getSpawnLocation().add(0, 2, 0));
     }
     
     public void onDisable() { 
@@ -42,18 +37,10 @@ public class hungerGames extends JavaPlugin{
     			player.sendMessage("Hunger Games, v0.1 - To start a new game, use /hungerGames start");
     		} else 
     		if(args.length != 0) {
-    			if(args[0].equalsIgnoreCase("prepare")){
-    				hg.setMaster(player);
-    			} else
     			if(args[0].equalsIgnoreCase("start")){
     				player.sendMessage("Starting Hunger Games");
     				for(Player p:getServer().getOnlinePlayers()){
-    					Set<Location> loc = getHG().getInicio().keySet();
-    					for(Location l:loc) {
-    						if(getHG().getInicio().get(l) == null)
-    							getHG().getInicio().put(l, p);
-    							p.teleport(l);
-    					}
+    					p.teleport(getHG().inicio);
     					hg.getVivos().add(p);
     				}
     				hg.startGame();
@@ -64,7 +51,7 @@ public class hungerGames extends JavaPlugin{
     			}
 
     			if(args[0].equalsIgnoreCase("alive")) {
-    				if(getHG().isActivo() == false) {
+    				if(getHG().activo == false) {
     					player.sendMessage("No hay ningun juego activo");
     				} else {
     					String msg ="";
