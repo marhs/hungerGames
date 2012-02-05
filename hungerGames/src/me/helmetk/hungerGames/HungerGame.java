@@ -13,6 +13,7 @@ public class HungerGame {
 	private Location inicio;
 	private Player master;
 	
+	// Getters and setters.
 	public Player getMaster() {
 		return master;
 	}
@@ -20,6 +21,7 @@ public class HungerGame {
 	public void setMaster(Player player) {
 		master = player;
 	}
+	
 	public Set<Player> getVivos() {
 		return vivos;
 	}
@@ -55,7 +57,8 @@ public class HungerGame {
 	public Logger getLog() {
 		return log;
 	}
-
+	
+	// Constructor
 	public HungerGame(Player[] players, Location inicio) {
 		Set<Player> set = new HashSet<Player>();
 		Set<Player> set2 = new HashSet<Player>();
@@ -67,9 +70,12 @@ public class HungerGame {
 		this.inicio = inicio;
 	}
 	
-	public void startGame() {
+	// Empieza un juego nuevo. 
+	public void startGame(Player master, Set<Player> players, Location inicio) {
+		setMaster(master);
+		setVivos(players);
+		setInicio(inicio);
 		for(Player p:getVivos()) {
-			p.chat("Soy " + p.getName() + " y voy a jugar a los Hunger Games!");
 			p.teleport(inicio);
 		}
 		// TODO Espera de 10 segundos para empezar el combate.
@@ -105,9 +111,9 @@ public class HungerGame {
 	public void finish() {
 		String msg;
 		if(getWinner() == null)
-			msg = "No hay ganador en esta edicion";
+			msg = "[hungerGames] There is no winner";
 		else 
-			msg = "El ganador es" + getWinner().getName();
+			msg = "[hungerGames] The winner is " + getWinner().getName();
 		for(Player p:muertos){
 			p.sendMessage(msg);
 		}

@@ -1,5 +1,7 @@
 package me.helmetk.hungerGames;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.bukkit.command.*;
@@ -37,30 +39,33 @@ public class hungerGames extends JavaPlugin{
     			player.sendMessage("Hunger Games, v0.1 - To start a new game, use /hungerGames start");
     		} else 
     		if(args.length != 0) {
-    			// Aqui se inicia los Hunger Games
+    			// Comando "start": Aqui se inicia los Hunger Games
     			if(args[0].equalsIgnoreCase("start") && args.length == 1){
-    				player.sendMessage("Starting Hunger Games");
-    				hg.setMaster(player);
-    				for(Player p:getServer().getOnlinePlayers()){
-    					hg.getVivos().add(p);
-        				p.sendMessage("El master es " + hg.getMaster().getName());
+    				if(!getHG().isActivo()) {
+    					broadcast("Starting new game");
+    					Set<Player> jug = new HashSet<Player>();
+    					for(Player p:getServer().getOnlinePlayers()){
+    						jug.add(p);
+    					}
+    					getHG().startGame(player, jug, getServer().getWorld("world").getSpawnLocation());
+    					broadcast("The master is " + getHG().getMaster().getName());
+    				} else {
+    					player.sendMessage("[hungerGames] Ya hay un juego en marcha");
     				}
-    				hg.startGame();
     			} else
-    			// Con esto se termina el juego.
+    			// Comando "stop": Con esto se termina el juego.
     			if(args[0].equalsIgnoreCase("stop") && args.length == 1) {
     				player.sendMessage("Stopping Hunger Games");
     				getHG().finish();
     			} else
-    			// Te permite sabes si hay algœn juego activo, y los jugadores que quedan vivos.
-    			// TODO Hay que hacer que s—lo el master pueda ver a los jugadores activos.
-    			if(args[0].equalsIgnoreCase("alive") && args.length == 1) {
+    			// Comando "status": Te permite sabes si hay algœn juego activo, y los jugadores que quedan vivos.
+    			if(args[0].equalsIgnoreCase("status") && args.length == 1) {
     				if(getHG().isActivo() == false) {
     					player.sendMessage("No hay ningun juego activo");
     				} else {
     					player.sendMessage("El juego esta en marcha");
     					if(player.equals(getHG().getMaster())){
-    						String msg ="";
+    						String msg ="Vivos: ";
     						for(Player p:getHG().getVivos()){
     							msg += p.getName() + " ";
     						}
@@ -77,6 +82,12 @@ public class hungerGames extends JavaPlugin{
     	
     	return false;
     }
-
+    
+    public void broadcast(String msg){
+    	for(Player p:getServer().getOnlinePlayers()){
+    		p.sendMessage("[hungerGames] " + msg);
+    	}
+    	log.info("[hungerGames] " + msg);
+    }
 
 }

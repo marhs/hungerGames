@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class HungerListener implements Listener{
 	Logger log = Logger.getLogger("Minecraft");
@@ -20,12 +21,9 @@ public class HungerListener implements Listener{
 		if(event.getEntity() instanceof Player && plugin.getHG().isActivo()){
 			Player player = (Player)event.getEntity();
 			plugin.getHG().muerto(player);
-			for(Player p:plugin.getServer().getOnlinePlayers()){
-				p.sendMessage("Ha muerto un jugador");
-				// TODO Que caiga un rayo.
-			}
+			plugin.broadcast("A player has been slain");
 			if(!player.equals(plugin.getHG().getMaster()))
-				player.kickPlayer("Has muerto");
+				player.kickPlayer("You has been slain");
 		}
 	}
 	
@@ -37,11 +35,17 @@ public class HungerListener implements Listener{
 	
 	@EventHandler
 	public void onPlayerLogin(PlayerJoinEvent event) {
-		if(plugin.getHG().isActivo() == true){
-			event.getPlayer().kickPlayer("Hay un juego activo, no puedes entrar hasta que termine");
+		if(plugin.getHG().isActivo() && !plugin.getHG().getMaster().equals(event.getPlayer())){
+			event.getPlayer().kickPlayer("There is a game in progress");
 		}
 	}
-	/* TODO Crear un listener para cuando alguien se desconecte, que lo
-	 * elimine de la lista de vivos.*/
 	
+	// Elimina de la partida a un jugador cuando abandona el server, que no sea el master.
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		if(plugin.getHG().getVivos().contains(event.getPlayer()) && !plugin.getHG().getMaster().equals(event.getPlayer())){
+			plugin.getHG().getVivos().remove(event.getPlayer());
+			plugin.broadcast("El jugador " + event.getPlayer().getName() + " ha abandonado");
+		}
+	}
 }
