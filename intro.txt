@@ -3,27 +3,24 @@ Marco Herrero <hielo.helado@gmail.com>
 
 Características:
 
-	X Juagadores, Y Masters.
+X	Varios Juagadores, 1 Master. (El master puede o no jugar)
 	Terreno de juego amplio, pero limitado.
-	No existe puntuación por matar a nadie, solo por sobrevivir el último
+X	No existe puntuación por matar a nadie, solo por sobrevivir el último
 	Todos los jugadores empiezan a x bloques del central, donde habrá una estructura [1].
 	El movimiento está desactivado hasta que comience el juego.
-	Cada vez que un jugador muere, es eliminado [2]
-	El último vivo gana.
+X	Cada vez que un jugador muere, es eliminado [2]
+X	El último vivo gana.
+X	No permite nuevos jugadores una vez que el juego ha empezado.
 
-	No permite nuevos jugadores una vez que el juego ha empezado.
-
-	[1] Estructura central
+No	[1] Estructura central
 		Contendrá diferentes materiales y objetos útiles para los jugadores
 		El valor del objeto aumenta la dificultad de conseguirlo.
 			Una espada de acero estará mas profunda en la estructura que una de piedra.
 		Los jugadores deben decidir si pelean por la estructura o abandonan el lugar
 		
 	[2] Eliminacion
-		Cada vez que un jugador muera, se informará en el chat que ha habido una muerte.
+X		Cada vez que un jugador muera, se informará en el chat que ha habido una muerte.
 		Al inicio de cada día, se informará quienes son los jugadores muertos.
-		Habrá una plataforma central elevada, donde son teleportados los jugadores muertos. 
-		No pueden abandonarla mientras dure el juego.
 	
 	[3] Incitación a la lucha mediante recompensas.
 		Existirá un altar de regalos, donde aparecerán regalos periódicamente. 
@@ -35,7 +32,7 @@ Características:
 		El creador del mapa, como es obvio, no puede jugar (sabe donde están las trampas, etc)
 	
 	[5] MASTER
-		Existirá un master que controle la partida
+X		Existirá un master que controle la partida
 		Se encarga de crear regalos, a una hora determinada (preferiblemente amanecer, anochecer)
 			Amanecer, anochecer evita la necesidad de llevar un reloj, pero no evita el tener que
 			permanecer en la superficie
@@ -43,7 +40,7 @@ Características:
 			Permanece invisible
 			Puede volar
 			No activa bloques/trampas
-			Puede atravesar bloques (?)
+			Puede atravesar bloques (?)(Creo que es imposible hacer esto)
 			Tiene acceso a mapa dinámico
 		Puede eliminar zonas de juego, cubriéndolas con lava.
 	[6] Otros
@@ -54,9 +51,9 @@ Implementacion básica:
 	El de arriba es el plugin completo, mientras que este será la primera versión jugable, para
 	que no haya que esperar todo el desarrollo.
 	Caracteristicas:
-		X Jugadores, sin master.
-		Mapa random.
-		No hay recompensas.
-		Eliminacion haciendo kick
-		Sin estructura central
+X		X Jugadores, sin master.
+X		Mapa random.
+X		No hay recompensas.
+X		Eliminacion haciendo kick
+X		Sin estructura central
 		Anuncia los muertos en su momento. (Intentar que no anuncie el asesino)

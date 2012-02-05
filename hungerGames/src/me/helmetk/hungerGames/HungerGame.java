@@ -11,7 +11,15 @@ public class HungerGame {
 	private Set<Player> vivos, muertos;
 	private boolean activo;
 	private Location inicio;
+	private Player master;
 	
+	public Player getMaster() {
+		return master;
+	}
+	
+	public void setMaster(Player player) {
+		master = player;
+	}
 	public Set<Player> getVivos() {
 		return vivos;
 	}

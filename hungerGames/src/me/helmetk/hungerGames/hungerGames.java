@@ -40,6 +40,8 @@ public class hungerGames extends JavaPlugin{
     			// Aqui se inicia los Hunger Games
     			if(args[0].equalsIgnoreCase("start") && args.length == 1){
     				player.sendMessage("Starting Hunger Games");
+    				hg.setMaster(player);
+    				player.sendMessage("El master es " + hg.getMaster().getName());
     				for(Player p:getServer().getOnlinePlayers()){
     					p.teleport(getHG().getInicio());
     					hg.getVivos().add(p);
@@ -57,11 +59,14 @@ public class hungerGames extends JavaPlugin{
     				if(getHG().isActivo() == false) {
     					player.sendMessage("No hay ningun juego activo");
     				} else {
-    					String msg ="";
-    					for(Player p:getHG().getVivos()){
-    						msg += p.getName() + " ";
+    					player.sendMessage("El juego esta en marcha");
+    					if(player.equals(getHG().getMaster())){
+    						String msg ="";
+    						for(Player p:getHG().getVivos()){
+    							msg += p.getName() + " ";
+    						}
+    						player.sendMessage(msg);
     					}
-    					player.sendMessage(msg);
     				} 
     			} else {
     				player.sendMessage("HungerGames start/stop/alive");
