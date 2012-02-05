@@ -72,8 +72,8 @@ public class HungerGame {
 			p.chat("Soy " + p.getName() + " y voy a jugar a los Hunger Games!");
 			p.teleport(inicio);
 		}
+		// TODO Espera de 10 segundos para empezar el combate.
 		activo = true;
-		// Set Jugadores en inicio.
 	}
 	public void muerto(Player player){
 		if(isActivo() == true){

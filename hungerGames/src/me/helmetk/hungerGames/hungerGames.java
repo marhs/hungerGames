@@ -41,9 +41,9 @@ public class hungerGames extends JavaPlugin{
     			if(args[0].equalsIgnoreCase("start") && args.length == 1){
     				player.sendMessage("Starting Hunger Games");
     				hg.setMaster(player);
-    				player.sendMessage("El master es " + hg.getMaster().getName());
     				for(Player p:getServer().getOnlinePlayers()){
     					hg.getVivos().add(p);
+        				p.sendMessage("El master es " + hg.getMaster().getName());
     				}
     				hg.startGame();
     			} else

@@ -22,8 +22,10 @@ public class HungerListener implements Listener{
 			plugin.getHG().muerto(player);
 			for(Player p:plugin.getServer().getOnlinePlayers()){
 				p.sendMessage("Ha muerto un jugador");
+				// TODO Que caiga un rayo.
 			}
-			player.kickPlayer("Has muerto");
+			if(!player.equals(plugin.getHG().getMaster()))
+				player.kickPlayer("Has muerto");
 		}
 	}
 	
@@ -39,5 +41,7 @@ public class HungerListener implements Listener{
 			event.getPlayer().kickPlayer("Hay un juego activo, no puedes entrar hasta que termine");
 		}
 	}
+	/* TODO Crear un listener para cuando alguien se desconecte, que lo
+	 * elimine de la lista de vivos.*/
 	
 }
