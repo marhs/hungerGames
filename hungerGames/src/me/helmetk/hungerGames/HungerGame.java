@@ -70,6 +70,7 @@ public class HungerGame {
 	public void startGame() {
 		for(Player p:getVivos()) {
 			p.chat("Soy " + p.getName() + " y voy a jugar a los Hunger Games!");
+			p.teleport(inicio);
 		}
 		activo = true;
 		// Set Jugadores en inicio.
@@ -84,10 +85,15 @@ public class HungerGame {
 
 	}
 	public boolean isFinished() {
+		// Mientras est en desarrollo, esto es == 0, pero deberia ser
+		// == 1, ya que debe haber un ganador. Si lo pruebo y estoy yo
+		// solo el juego termina justo al empezar.
 		return getVivos().size() == 0;
 	}
 	
 	public Player getWinner() {
+		/* Da un ganador si y solo si hay un jugador vivo en ese momento, en
+		 * caso contrario, devuelve null. */
 		Player res = null;
 		if(getVivos().size() > 1)
 			return res;

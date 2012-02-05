@@ -43,7 +43,6 @@ public class hungerGames extends JavaPlugin{
     				hg.setMaster(player);
     				player.sendMessage("El master es " + hg.getMaster().getName());
     				for(Player p:getServer().getOnlinePlayers()){
-    					p.teleport(getHG().getInicio());
     					hg.getVivos().add(p);
     				}
     				hg.startGame();
