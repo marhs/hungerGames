@@ -37,7 +37,8 @@ public class hungerGames extends JavaPlugin{
     			player.sendMessage("Hunger Games, v0.1 - To start a new game, use /hungerGames start");
     		} else 
     		if(args.length != 0) {
-    			if(args[0].equalsIgnoreCase("start")){
+    			// Aqui se inicia los Hunger Games
+    			if(args[0].equalsIgnoreCase("start") && args.length == 1){
     				player.sendMessage("Starting Hunger Games");
     				for(Player p:getServer().getOnlinePlayers()){
     					p.teleport(getHG().getInicio());
@@ -45,12 +46,14 @@ public class hungerGames extends JavaPlugin{
     				}
     				hg.startGame();
     			} else
-    			if(args[0].equalsIgnoreCase("stop")) {
+    			// Con esto se termina el juego.
+    			if(args[0].equalsIgnoreCase("stop") && args.length == 1) {
     				player.sendMessage("Stopping Hunger Games");
     				getHG().finish();
-    			}
-
-    			if(args[0].equalsIgnoreCase("alive")) {
+    			} else
+    			// Te permite sabes si hay algœn juego activo, y los jugadores que quedan vivos.
+    			// TODO Hay que hacer que s—lo el master pueda ver a los jugadores activos.
+    			if(args[0].equalsIgnoreCase("alive") && args.length == 1) {
     				if(getHG().isActivo() == false) {
     					player.sendMessage("No hay ningun juego activo");
     				} else {
@@ -60,6 +63,8 @@ public class hungerGames extends JavaPlugin{
     					}
     					player.sendMessage(msg);
     				} 
+    			} else {
+    				player.sendMessage("HungerGames start/stop/alive");
     			}
    
     		}
