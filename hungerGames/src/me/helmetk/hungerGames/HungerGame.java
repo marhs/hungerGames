@@ -87,6 +87,7 @@ public class HungerGame {
 			p.teleport(inicio);
 			p.setExp(0);
 			p.setLevel(0);
+			// TODO Investigar cual es el maximo foodLevel()
 			p.setFoodLevel(20);
 			p.setHealth(p.getMaxHealth());
 			p.getInventory().clear();

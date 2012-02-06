@@ -2,6 +2,7 @@ package me.helmetk.hungerGames;
 
 import java.util.logging.Logger;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,10 +51,17 @@ public class HungerListener implements Listener{
 		}
 	}
 	
+	// Si Movement Allowed esta en false, te permite mirar, pero no moverte.
 	@EventHandler 
     public void onPlayerMove(PlayerMoveEvent event) {
 		if(!plugin.getHG().isMovementAllowed()){
-			event.setTo(event.getFrom());
+			Location destino = new Location(event.getFrom().getWorld(), 
+											event.getFrom().getX(), 
+											event.getFrom().getY(), 
+											event.getFrom().getZ(), 
+											event.getTo().getYaw(), 
+											event.getTo().getPitch());
+			event.setTo(destino);
 			return;
 		}
 	}
