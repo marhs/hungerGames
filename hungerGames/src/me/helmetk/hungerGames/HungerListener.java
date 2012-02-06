@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class HungerListener implements Listener{
@@ -18,7 +19,7 @@ public class HungerListener implements Listener{
 	}
 	@EventHandler
 	public void onPlayerDeath(EntityDeathEvent event) {
-		if(event.getEntity() instanceof Player && plugin.getHG().isActivo()){
+		if(event.getEntity() instanceof Player && plugin.getHG().isActivo()) {
 			Player player = (Player)event.getEntity();
 			plugin.getHG().muerto(player);
 			plugin.broadcast("A player has been slain");
@@ -26,7 +27,7 @@ public class HungerListener implements Listener{
 				player.kickPlayer("You has been slain");
 		}
 	}
-	
+
 	/* Nota de kick:
 	 * Para la implementaci—n que hace kick, no hace falta la lista muertos,
 	 * pero ya que planeo que los jugadores se queden en una zona especial 
@@ -46,6 +47,14 @@ public class HungerListener implements Listener{
 		if(plugin.getHG().getVivos().contains(event.getPlayer()) && !plugin.getHG().getMaster().equals(event.getPlayer())){
 			plugin.getHG().getVivos().remove(event.getPlayer());
 			plugin.broadcast("El jugador " + event.getPlayer().getName() + " ha abandonado");
+		}
+	}
+	
+	@EventHandler 
+    public void onPlayerMove(PlayerMoveEvent event) {
+		if(!plugin.getHG().isMovementAllowed()){
+			event.setTo(event.getFrom());
+			return;
 		}
 	}
 }

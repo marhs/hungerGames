@@ -33,31 +33,46 @@ public class hungerGames extends JavaPlugin{
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
     	
     	Player player = (Player) sender;
+    	/* El nombre del comando es "hungerGames", que si se escribe solo /hungerGames
+    	 * te devuelve la descripcion del plugin, despues definimos los comandos como
+    	 * por ejemplo "/hungerGames start" */
     	if(cmd.getName().equalsIgnoreCase("hungerGames")){
     		if(args.length == 0) {
     			// s
     			player.sendMessage("Hunger Games, v0.1 - To start a new game, use /hungerGames start");
     		} else 
     		if(args.length != 0) {
+    			
     			// Comando "start": Aqui se inicia los Hunger Games
     			if(args[0].equalsIgnoreCase("start") && args.length == 1){
     				if(!getHG().isActivo()) {
     					broadcast("Starting new game");
+    					broadcast("El juego empieza en 10 segundos");
     					Set<Player> jug = new HashSet<Player>();
     					for(Player p:getServer().getOnlinePlayers()){
     						jug.add(p);
     					}
     					getHG().startGame(player, jug, getServer().getWorld("world").getSpawnLocation());
     					broadcast("The master is " + getHG().getMaster().getName());
+    					getHG().setMovementAllowed(false);
+    					getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    						public void run() {
+    							getHG().setMovementAllowed(true);
+    							broadcast("Adelante!");
+    						}
+    					}, 200L);
+    					
     				} else {
     					player.sendMessage("[hungerGames] Ya hay un juego en marcha");
     				}
     			} else
+    				
     			// Comando "stop": Con esto se termina el juego.
-    			if(args[0].equalsIgnoreCase("stop") && args.length == 1) {
-    				player.sendMessage("Stopping Hunger Games");
+    			if(args[0].equalsIgnoreCase("stop") && args.length == 1 && player.equals(getHG().getMaster())) {
+    				broadcast("Stopping Hunger Games");
     				getHG().finish();
     			} else
+    				
     			// Comando "status": Te permite sabes si hay algœn juego activo, y los jugadores que quedan vivos.
     			if(args[0].equalsIgnoreCase("status") && args.length == 1) {
     				if(getHG().isActivo() == false) {

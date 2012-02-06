@@ -12,8 +12,16 @@ public class HungerGame {
 	private boolean activo;
 	private Location inicio;
 	private Player master;
+	private boolean movementAllowed;
 	
 	// Getters and setters.
+	public boolean isMovementAllowed() {
+		return movementAllowed;
+	}
+	
+	public void setMovementAllowed(boolean estado) {
+		this.movementAllowed = estado;
+	}
 	public Player getMaster() {
 		return master;
 	}
@@ -77,8 +85,16 @@ public class HungerGame {
 		setInicio(inicio);
 		for(Player p:getVivos()) {
 			p.teleport(inicio);
+			p.setExp(0);
+			p.setLevel(0);
+			p.setFoodLevel(20);
+			p.setHealth(p.getMaxHealth());
+			p.getInventory().clear();
 		}
-		// TODO Espera de 10 segundos para empezar el combate.
+		/* TODO Espera de 5 segundos para empezar el combate.
+		 * pvp.desactivar
+		 * esperar 5 segundos
+		 * activar pvp*/
 		activo = true;
 	}
 	public void muerto(Player player){
