@@ -28,9 +28,9 @@ public class HungerListener implements Listener{
 				player.kickPlayer("You has been slain");
 		}
 	}
-
+	
 	/* Nota de kick:
-	 * Para la implementaci—n que hace kick, no hace falta la lista muertos,
+	 * Para la implementacion que hace kick, no hace falta la lista muertos,
 	 * pero ya que planeo que los jugadores se queden en una zona especial 
 	 * del mapa (Ànether? Àplataforma? Àthe_end?), voy a mantener as’ la 
 	 * implementacion */
