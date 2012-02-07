@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+//Hola que tal?
+
 public class HungerGame {
 	private Logger log = Logger.getLogger("Minecraft");
 	private Set<Player> vivos, muertos;
