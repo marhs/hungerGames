@@ -22,8 +22,8 @@ public class HungerListener implements Listener{
 	public void onPlayerDeath(EntityDeathEvent event) {
 		if(event.getEntity() instanceof Player && plugin.getHG().isActivo()) {
 			Player player = (Player)event.getEntity();
-			plugin.getHG().muerto(player);
 			plugin.broadcast("A player has been slain");
+			plugin.getHG().muerto(player);
 			if(!player.equals(plugin.getHG().getMaster()))
 				player.kickPlayer("You has been slain");
 		}

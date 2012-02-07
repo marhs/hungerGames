@@ -75,6 +75,7 @@ public class HungerGame {
 		for(Player p:players) {
 			set.add(p);
 		}
+		this.movementAllowed = true;
 		this.vivos = set;
 		this.muertos = set2;
 		this.inicio = inicio;
@@ -113,7 +114,7 @@ public class HungerGame {
 		// Mientras esté en desarrollo, esto es == 0, pero deberia ser
 		// == 1, ya que debe haber un ganador. Si lo pruebo y estoy yo
 		// solo el juego termina justo al empezar.
-		return getVivos().size() == 0;
+		return getVivos().size() < 2;
 	}
 	
 	public Player getWinner() {
@@ -133,9 +134,13 @@ public class HungerGame {
 			msg = "[hungerGames] There is no winner";
 		else 
 			msg = "[hungerGames] The winner is " + getWinner().getName();
+		for(Player p:vivos){
+			p.sendMessage(msg);
+		}
 		for(Player p:muertos){
 			p.sendMessage(msg);
 		}
+		setMovementAllowed(true);
 		getVivos().addAll(getMuertos());
 		getMuertos().clear();
     	getLog().info(msg);

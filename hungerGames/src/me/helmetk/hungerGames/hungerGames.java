@@ -55,10 +55,12 @@ public class hungerGames extends JavaPlugin{
     					getHG().startGame(player, jug, getServer().getWorld("world").getSpawnLocation());
     					broadcast("The master is " + getHG().getMaster().getName());
     					getHG().setMovementAllowed(false);
+    					getServer().getWorld("world").setPVP(false);
     					// Tarea retrasada, el tiempo (200L) viene dado en ticks, hay 20 ticks por segundo.
     					getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
     						public void run() {
     							getHG().setMovementAllowed(true);
+    	    					getServer().getWorld("world").setPVP(true);
     							broadcast("Adelante!");
     						}
     					}, 200L);
