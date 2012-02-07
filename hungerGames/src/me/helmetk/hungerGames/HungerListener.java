@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -22,11 +23,13 @@ public class HungerListener implements Listener{
 	public void onPlayerDeath(EntityDeathEvent event) {
 		if(event.getEntity() instanceof Player && plugin.getHG().isActivo()) {
 			Player player = (Player)event.getEntity();
-			plugin.broadcast("A player has been slain");
+			PlayerDeathEvent event2 = (PlayerDeathEvent) event;
+			event2.setDeathMessage("[hungerGames] A player has been slain");
 			plugin.getHG().muerto(player);
 			if(!player.equals(plugin.getHG().getMaster()))
 				player.kickPlayer("You has been slain");
 		}
+
 	}
 	
 	/* Nota de kick:
