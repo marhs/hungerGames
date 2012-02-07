@@ -11,8 +11,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class hungerGames extends JavaPlugin{
 	public HungerGame hg;
 	private Logger log = Logger.getLogger("Minecraft");
+	Set<Player> muertosDiarios = new HashSet<Player>();
 	
-    public void onEnable() { 
+    public Set<Player> getMuertosDiarios() {
+		return muertosDiarios;
+	}
+
+	public void setMuertosDiarios(Set<Player> muertosDiarios) {
+		this.muertosDiarios = muertosDiarios;
+	}
+
+	public void onEnable() { 
         getServer().getPluginManager().registerEvents(new HungerListener(this), this);
     	log.info("[Hunger Games] ready!");
     	hg = new HungerGame(this.getServer().getOnlinePlayers(), getServer().getWorld("world").getSpawnLocation().add(0, 2, 0));

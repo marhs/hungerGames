@@ -1,5 +1,8 @@
 package me.helmetk.hungerGames;
 
+import java.awt.Event;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.bukkit.Location;
@@ -17,6 +20,7 @@ public class HungerListener implements Listener{
 	hungerGames plugin;
 	public HungerListener(hungerGames plugin) {
 		this.plugin = plugin;
+	
 
 	}
 	@EventHandler
@@ -26,10 +30,11 @@ public class HungerListener implements Listener{
 			PlayerDeathEvent event2 = (PlayerDeathEvent) event;
 			event2.setDeathMessage("[hungerGames] A player has been slain");
 			plugin.getHG().muerto(player);
-			if(!player.equals(plugin.getHG().getMaster()))
+			if(!player.equals(plugin.getHG().getMaster())){
 				player.kickPlayer("You has been slain");
+			}
+			plugin.getMuertosDiarios().add(player);
 		}
-
 	}
 	
 	/* Nota de kick:
@@ -66,6 +71,17 @@ public class HungerListener implements Listener{
 											event.getTo().getPitch());
 			event.setTo(destino);
 			return;
+		}
+	}
+	
+	public void onCustomEvent(Event event){
+		if(plugin.getServer().getWorld("world").getTime()==18000){
+			String e = "";
+			for(Player p:plugin.getMuertosDiarios()){
+				e += " "+p.getName();
+			}
+			plugin.getMuertosDiarios().clear();
+			plugin.broadcast("Los jugadores muertos hoy son:" +e);
 		}
 	}
 }
