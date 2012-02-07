@@ -7,7 +7,7 @@ X	Varios Juagadores, 1 Master. (El master puede o no jugar)
 	Terreno de juego amplio, pero limitado.
 X	No existe puntuación por matar a nadie, solo por sobrevivir el último
 	Todos los jugadores empiezan a x bloques del central, donde habrá una estructura [1].
-	El movimiento está desactivado hasta que comience el juego.
+X	El movimiento está desactivado hasta que comience el juego.
 X	Cada vez que un jugador muere, es eliminado [2]
 X	El último vivo gana.
 X	No permite nuevos jugadores una vez que el juego ha empezado.
@@ -38,7 +38,7 @@ X		Existirá un master que controle la partida
 			permanecer en la superficie
 		Modo fantasma/espectador:
 			Permanece invisible
-			Puede volar
+X			Puede volar
 			No activa bloques/trampas
 			Puede atravesar bloques (?)(Creo que es imposible hacer esto)
 			Tiene acceso a mapa dinámico
@@ -56,4 +56,4 @@ X		Mapa random.
 X		No hay recompensas.
 X		Eliminacion haciendo kick
 X		Sin estructura central
-		Anuncia los muertos en su momento. (Intentar que no anuncie el asesino)
+X		Anuncia los muertos en su momento. (Intentar que no anuncie el asesino)
