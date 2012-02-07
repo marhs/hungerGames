@@ -3,6 +3,4 @@ bin/
 .settings/
 .classpath
 .project
-
-
-hungerGames/src/com/gmail/hielohelado/hungergames/hungerGames.java
+.gitignore
