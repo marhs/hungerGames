@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-//Hola que tal?
 
 public class HungerGame {
 	private Logger log = Logger.getLogger("Minecraft");
@@ -95,10 +94,6 @@ public class HungerGame {
 			p.setHealth(p.getMaxHealth());
 			p.getInventory().clear();
 		}
-		/* TODO Espera de 5 segundos para empezar el combate.
-		 * pvp.desactivar
-		 * esperar 5 segundos
-		 * activar pvp*/
 		activo = true;
 	}
 	public void muerto(Player player){

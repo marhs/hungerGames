@@ -1,8 +1,5 @@
 package me.helmetk.hungerGames;
 
-import java.awt.Event;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import org.bukkit.Location;
@@ -23,12 +20,15 @@ public class HungerListener implements Listener{
 	
 
 	}
+	
 	@EventHandler
 	public void onPlayerDeath(EntityDeathEvent event) {
 		if(event.getEntity() instanceof Player && plugin.getHG().isActivo()) {
 			Player player = (Player)event.getEntity();
 			PlayerDeathEvent event2 = (PlayerDeathEvent) event;
 			event2.setDeathMessage("[hungerGames] A player has been slain");
+			//Rayo en spawn
+			plugin.getServer().getWorld("world").strikeLightning(plugin.getServer().getWorld("world").getSpawnLocation());
 			plugin.getHG().muerto(player);
 			if(!player.equals(plugin.getHG().getMaster())){
 				player.kickPlayer("You has been slain");
@@ -74,8 +74,14 @@ public class HungerListener implements Listener{
 		}
 	}
 	
-	public void onCustomEvent(Event event){
-		if(plugin.getServer().getWorld("world").getTime()==18000){
+	//Listener para el EventTimeDawn
+	
+	@EventHandler
+	public void onCustomEvent(EventTimeDawn event){
+	
+		if(event instanceof EventTimeDawn){
+			
+			//if( !plugin.getMuertosDiarios().isEmpty() ){
 			String e = "";
 			for(Player p:plugin.getMuertosDiarios()){
 				e += " "+p.getName();
@@ -83,5 +89,6 @@ public class HungerListener implements Listener{
 			plugin.getMuertosDiarios().clear();
 			plugin.broadcast("Los jugadores muertos hoy son:" +e);
 		}
+	
 	}
 }
