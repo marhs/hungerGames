@@ -55,7 +55,8 @@ public class HungerListener implements Listener{
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		if(plugin.getHG().getVivos().contains(event.getPlayer()) && !plugin.getHG().getMaster().equals(event.getPlayer())){
 			plugin.getHG().getVivos().remove(event.getPlayer());
-			plugin.broadcast("El jugador " + event.getPlayer().getName() + " ha abandonado");
+			//Quitar Mensaje De Salida Del Servidor
+			event.setQuitMessage("");
 		}
 	}
 	
