@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -77,13 +76,14 @@ public class HungerListener implements Listener{
 	@EventHandler
 	public void onCustomEvent(EventTimeDawn event){
 		if(event instanceof EventTimeDawn){
-			//if( !plugin.getMuertosDiarios().isEmpty() ){
+			if( !plugin.getMuertosDiarios().isEmpty() ){
 			String e = "";
 			for(Player p:plugin.getMuertosDiarios()){
 				e += " "+p.getName();
 			}
 			plugin.getMuertosDiarios().clear();
 			plugin.broadcast("Los jugadores muertos hoy son:" +e);
+			}
 		}
 	
 	}
