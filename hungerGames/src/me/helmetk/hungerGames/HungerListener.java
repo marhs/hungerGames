@@ -25,14 +25,8 @@ public class HungerListener implements Listener{
 	public void onPlayerDeath(EntityDeathEvent event) {
 		if(event.getEntity() instanceof Player && plugin.getHG().isActivo()) {
 			Player player = (Player)event.getEntity();
-			PlayerDeathEvent event2 = (PlayerDeathEvent) event;
-			event2.setDeathMessage("[hungerGames] A player has been slain");
-			//Rayo en spawn
-			plugin.getServer().getWorld("world").strikeLightning(plugin.getServer().getWorld("world").getSpawnLocation());
 			plugin.getHG().muerto(player);
-			if(!player.equals(plugin.getHG().getMaster())){
-				player.kickPlayer("You has been slain");
-			}
+			player.kickPlayer("You has been slain");
 			plugin.getMuertosDiarios().add(player);
 		}
 	}
@@ -55,8 +49,11 @@ public class HungerListener implements Listener{
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		if(plugin.getHG().getVivos().contains(event.getPlayer()) && !plugin.getHG().getMaster().equals(event.getPlayer())){
 			plugin.getHG().getVivos().remove(event.getPlayer());
-			//Quitar Mensaje De Salida Del Servidor
-			event.setQuitMessage("");
+			plugin.getMuertosDiarios().add(event.getPlayer());
+			//Mensaje De Salida Del Servidor
+			event.setQuitMessage("[hungerGames] A player has been slain");
+			//Rayo en spawn
+			plugin.getServer().getWorld("world").strikeLightning(plugin.getServer().getWorld("world").getSpawnLocation());
 		}
 	}
 	
@@ -79,9 +76,7 @@ public class HungerListener implements Listener{
 	
 	@EventHandler
 	public void onCustomEvent(EventTimeDawn event){
-	
 		if(event instanceof EventTimeDawn){
-			
 			//if( !plugin.getMuertosDiarios().isEmpty() ){
 			String e = "";
 			for(Player p:plugin.getMuertosDiarios()){
