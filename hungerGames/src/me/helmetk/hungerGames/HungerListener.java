@@ -52,7 +52,7 @@ public class HungerListener implements Listener{
 			//Mensaje De Salida Del Servidor
 			event.setQuitMessage("[hungerGames] A player has been slain");
 			//Rayo en spawn
-			plugin.getServer().getWorld("world").strikeLightning(plugin.getServer().getWorld("world").getSpawnLocation());
+			plugin.getServer().getWorld("hgWorld").strikeLightning(plugin.getServer().getWorld("hgWorld").getSpawnLocation());
 		}
 	}
 	
@@ -66,6 +66,7 @@ public class HungerListener implements Listener{
 											event.getFrom().getZ(), 
 											event.getTo().getYaw(), 
 											event.getTo().getPitch());
+			
 			event.setTo(destino);
 			return;
 		}

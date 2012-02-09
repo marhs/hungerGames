@@ -3,6 +3,15 @@ package me.helmetk.hungerGames;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
+
+import org.bukkit.Chunk;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.WorldCreator;
+import org.bukkit.WorldType;
+import org.bukkit.World.Environment;
+import org.bukkit.block.Block;
 import org.bukkit.command.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
@@ -14,7 +23,7 @@ public class hungerGames extends JavaPlugin{
 	public HungerGame hg;
 	private Logger log = Logger.getLogger("Minecraft");
 	Set<Player> muertosDiarios = new HashSet<Player>();
-	//World world1 = getServer().getWorld("world");
+	private World world1 ;
 	BukkitScheduler tareas;
 	Boolean mensajeDelDia = false;
 	
@@ -41,7 +50,19 @@ public class hungerGames extends JavaPlugin{
 		//Crea Tareas
 		tareas = getServer().getScheduler();
 		
-    	log.info("[Hunger Games] ready!");
+		if(getServer().getWorld("hgWorld") == null){
+			getServer().getLogger().info("Creando mapa ...");
+			WorldCreator wcreator = new WorldCreator("hgWorld");
+			wcreator.environment(Environment.NORMAL);
+			wcreator.type(WorldType.NORMAL);
+			getServer().createWorld(wcreator);
+		}
+		
+		if(getServer().getWorld("hgWorld") != null){
+			world1 = getServer().getWorld("hgWorld");
+		}
+		
+		log.info("[Hunger Games] ready!");
     	hg = new HungerGame(this.getServer().getOnlinePlayers(), getServer().getWorld("world").getSpawnLocation().add(0, 2, 0));
     }
     
@@ -73,13 +94,18 @@ public class hungerGames extends JavaPlugin{
     			// Comando "start": Aqui se inicia los Hunger Games
     			if(args[0].equalsIgnoreCase("start") && args.length == 1){
     				if(!getHG().isActivo()) {
+    					//Busca mundo hgWorld
+    					world1 = getServer().getWorld("hgWorld");
+    					if(world1 == null){
+    						player.sendMessage("Mapa no creado");
+    						return false;
+    					}
     					
- 
     					//Actica tarea de control del tiempo
     					 tareas.scheduleAsyncRepeatingTask(this, new Runnable() {
     							@Override
     							public void run() {
-    								Long Hora=getServer().getWorld("world").getTime();
+    								Long Hora=world1.getTime();
     								
     								if( Hora == 18000 && getMensajeDelDia() == false){
     									getServer().getPluginManager().callEvent(new EventTimeDawn());
@@ -93,18 +119,23 @@ public class hungerGames extends JavaPlugin{
     					broadcast("Starting new game");
     					broadcast("El juego empieza en 10 segundos");
     					Set<Player> jug = new HashSet<Player>();
+    					Location spawnnuevo = new Location(world1
+    							, world1.getSpawnLocation().getBlockX()
+    							, world1.getHighestBlockYAt(world1.getSpawnLocation())
+    							, world1.getSpawnLocation().getBlockZ());
     					for(Player p:getServer().getOnlinePlayers()){
     						jug.add(p);
+    						p.teleport(spawnnuevo);
     					}
-    					getHG().startGame(player, jug, getServer().getWorld("world").getSpawnLocation().add(0, 10, 0));
+    					getHG().startGame(player, jug, spawnnuevo);
     					broadcast("The master is " + getHG().getMaster().getName());
     					getHG().setMovementAllowed(false);
-    					getServer().getWorld("world").setPVP(false);
+    					world1.setPVP(false);
     					// Tarea retrasada, el tiempo (200L) viene dado en ticks, hay 20 ticks por segundo.
     					getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
     						public void run() {
     							getHG().setMovementAllowed(true);
-    	    					getServer().getWorld("world").setPVP(true);
+    	    					world1.setPVP(true);
     							broadcast("Adelante!");
     						}
     					}, 200L);
@@ -117,13 +148,22 @@ public class hungerGames extends JavaPlugin{
     			// Comando "stop": Con esto se termina el juego.
     			if(args[0].equalsIgnoreCase("stop") && args.length == 1 && player.equals(getHG().getMaster())) {
     				broadcast("Stopping Hunger Games");
+    				//Teletransporte al otromundo
+    				for(Player p:getHG().getVivos()){
+    					p.teleport(getServer().getWorld("world").getSpawnLocation());
+    				}
+    				for(Player p:getHG().getMuertos()){
+    					p.teleport(getServer().getWorld("world").getSpawnLocation());
+    				}
     				getHG().finish();
+    				return true;
     			} else
     				
     			// Comando "status": Te permite sabes si hay algœn juego activo, y los jugadores que quedan vivos.
     			if(args[0].equalsIgnoreCase("status") && args.length == 1) {
     				if(getHG().isActivo() == false) {
     					player.sendMessage("No hay ningun juego activo");
+    					return true;
     				} else {
     					player.sendMessage("El juego esta en marcha");
     					if(player.equals(getHG().getMaster())){
@@ -132,11 +172,56 @@ public class hungerGames extends JavaPlugin{
     							msg += p.getName() + " ";
     						}
     						player.sendMessage(msg);
+    						return true;
     					}
     				} 
-    			} else {
-    				player.sendMessage("HungerGames start/stop/alive");
+    			} else 
+    				
+    			if(args[0].equalsIgnoreCase("prepare") && args.length == 1) {
+    				if(getHG().isActivo()==false){
+    					
+    					player.sendMessage("Preparando Mapa ... ");
+
+    					if(getServer().getWorld("hgWorld")==null){
+    						player.sendMessage("Creando mapa ...");
+    						WorldCreator wcreator = new WorldCreator("hgWorld");
+        					wcreator.environment(Environment.NORMAL);
+        					wcreator.type(WorldType.NORMAL);
+        					getServer().createWorld(wcreator);
+        					player.teleport(getServer().getWorld("hgWorld").getSpawnLocation());
+        					player.sendMessage("Mapa creado. Ahora usa de nuevo prepare ...");
+    						return true;
+    					}else{
+    						player.teleport(getServer().getWorld("hgWorld").getSpawnLocation());
+    						
+    						World mundo1=getServer().getWorld("hgWorld");
+    						Chunk source= mundo1.getSpawnLocation().getChunk();
+    						
+    						int spawnx = source.getX();
+    						int spawnz = source.getZ();
+    						int spawny = mundo1.getHighestBlockYAt(spawnx, spawnz);
+    						
+    						ChunkInicio(source, spawny);
+    						ChunkInicio(mundo1.getChunkAt(spawnx+1, spawnz), spawny);
+    						ChunkInicio(mundo1.getChunkAt(spawnx, spawnz+1), spawny);
+    						ChunkInicio(mundo1.getChunkAt(spawnx+1, spawnz+1), spawny);
+    						
+    					}
+    					
+    					player.sendMessage("Mapa preparado ahora puede iniciar el juego con start");
+    					return true;
+    					
+    				}else{
+    					player.sendMessage("El juego está Activo");
+    					return true;
+    				}
+    			
+    			
     			}
+    			
+    			else 
+    				player.sendMessage("HungerGames start/stop/alive");
+    			
    
     		}
     		return true;
@@ -144,6 +229,21 @@ public class hungerGames extends JavaPlugin{
     	
     	return false;
     }
+    
+    private void ChunkInicio(Chunk source,int spawny){
+    	for(int x1=0;x1<16;x1++){
+			for(int z1=0;z1<16;z1++){
+				//result[(x1 * 16 + z1) * 128 + spawny]=(byte)Material.BEDROCK.getId();
+				Block bloque=source.getBlock(x1, spawny, z1);
+				bloque.setType(Material.BEDROCK);
+				for(int y=spawny+1;y<128;y++)source.getBlock(x1, y,z1).setType(Material.AIR);
+			}
+		}
+    }
+    
+    public World getWorld1() {
+    	return world1;
+	}
     
     public void broadcast(String msg){
     	for(Player p:getServer().getOnlinePlayers()){
