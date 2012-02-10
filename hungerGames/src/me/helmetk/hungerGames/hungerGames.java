@@ -151,13 +151,10 @@ public class hungerGames extends JavaPlugin{
     			if(args[0].equalsIgnoreCase("stop") && args.length == 1 && player.equals(getHG().getMaster())) {
     				broadcast("Stopping Hunger Games");
     				//Teletransporte al otromundo
-    				for(Player p:getHG().getVivos()){
-    					p.teleport(getServer().getWorld("world").getSpawnLocation());
-    				}
-    				for(Player p:getHG().getMuertos()){
-    					p.teleport(getServer().getWorld("world").getSpawnLocation());
-    				}
-    				getHG().finish();
+    				resetPlayers();
+    				
+    				if(getHG().isActivo())getHG().finish();
+    				
     				return true;
     			} else
     				
@@ -238,6 +235,15 @@ public class hungerGames extends JavaPlugin{
     	}
     	
     	return false;
+    }
+    
+    public void resetPlayers(){
+    	for(Player p:getHG().getVivos()){
+			p.teleport(getServer().getWorld("world").getSpawnLocation());
+		}
+		for(Player p:getHG().getMuertos()){
+			p.teleport(getServer().getWorld("world").getSpawnLocation());
+		}
     }
     
     private void ChunkInicio(Chunk source,int spawny){
