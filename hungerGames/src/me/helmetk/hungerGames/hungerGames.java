@@ -34,6 +34,8 @@ public class hungerGames extends JavaPlugin{
 	public Map<Player, ItemStack[]> Inventarios = new HashMap<Player, ItemStack[]>();
 	public Map<Player, ItemStack[]> Armaduras = new HashMap<Player, ItemStack[]>();
 	public HashMap<Player, Location> origLocation = new HashMap<Player, Location>();
+	public Map<Player, Integer> Comida = new HashMap<Player, Integer>();
+	public Map<Player, Integer> Vida = new HashMap<Player, Integer>();
 	public Map<Player, Float> Exps = new HashMap<Player, Float>();
 	
 	public Boolean getMensajeDelDia(){
@@ -147,6 +149,8 @@ public class hungerGames extends JavaPlugin{
     						Armaduras.put(p, p.getInventory().getArmorContents());
     						origLocation.put(p, p.getLocation());
     						Exps.put(p, p.getExp());
+    						Vida.put(p, p.getHealth());
+    						Comida.put(p, p.getFoodLevel());
     						
     						//Teletransporte a lugares aleatorios en el chunk
     						p.teleport(spawnnuevo.add(new Location(world1
@@ -175,9 +179,9 @@ public class hungerGames extends JavaPlugin{
     				broadcast("Stopping Hunger Games");
     				//Teletransporte al otromundo
     				resetPlayers();
-    				
-    				if(getHG().isActivo())getHG().finish();
-    				
+    				if(getHG().isActivo()){
+    					getHG().finish();
+    				}
     				return true;
     			} else
     				
@@ -267,12 +271,16 @@ public class hungerGames extends JavaPlugin{
     		p.getInventory().setContents(Inventarios.get(p));
     		p.getInventory().setArmorContents(Armaduras.get(p));
 			p.teleport(origLocation.get(p));
+			p.setHealth(Vida.get(p));
+			p.setFoodLevel(Comida.get(p));
 		}
 		for(Player p:getHG().getMuertos()){
 			p.setExp(Exps.get(p));
     		p.getInventory().setContents(Inventarios.get(p));
     		p.getInventory().setArmorContents(Armaduras.get(p));
     		p.teleport(origLocation.get(p));
+    		p.setHealth(Vida.get(p));
+			p.setFoodLevel(Comida.get(p));
 		}
     }
     
