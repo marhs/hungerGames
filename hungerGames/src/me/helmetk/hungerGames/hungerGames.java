@@ -176,12 +176,28 @@ public class hungerGames extends JavaPlugin{
     				
     			// Comando "stop": Con esto se termina el juego.
     			if(args[0].equalsIgnoreCase("stop") && args.length == 1 && player.equals(getHG().getMaster())) {
+    				//Finalizael juego si no esta finalizado
     				broadcast("Stopping Hunger Games");
-    				//Teletransporte al otromundo
-    				resetPlayers();
     				if(getHG().isActivo()){
     					getHG().finish();
     				}
+    				broadcast("Waiting for all players reconnect ...");
+    				//Espera a que todos los jugadores se reconecten y esten vivos.
+    				boolean reconectados=true;
+    				while(reconectados){
+    					for(Player p:getHG().getVivos()){
+    						reconectados &= !p.isDead();
+    					}
+    					try {
+							Thread.sleep(10);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+    				}
+    				broadcast("Start teleport come back ...");
+    				//Teletransporte al otromundo
+    				resetPlayers();
+    				broadcast("Huger Games Stopped !");
     				return true;
     			} else
     				
