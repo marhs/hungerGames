@@ -214,9 +214,7 @@ public class hungerGames extends JavaPlugin{
         					wcreator.environment(Environment.NORMAL);
         					wcreator.type(WorldType.NORMAL);
         					getServer().createWorld(wcreator);
-        					player.sendMessage("World created. Use prepare again");
-    						return true;
-    					}else{
+    					}
     						
     						World mundo1=getServer().getWorld("hgWorld");
     						Chunk source= mundo1.getSpawnLocation().getChunk();
@@ -240,7 +238,7 @@ public class hungerGames extends JavaPlugin{
     						
     						preparado=true;
     						
-    					}
+    					
     					
     					player.sendMessage("World created, use start to start a new game");
     					return true;
