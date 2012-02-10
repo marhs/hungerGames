@@ -1,3 +1,18 @@
-Hunger Games Plugin.
+Hunger Games v0.1
+
 Marco Herrero <hielo.helado@gmail.com>
-Esto es un plugin para bukkit (actualmente 1.1 R3), que pretende ser una implementacion de el tornedo detallado en los libros de Los Juegos del Hambre (The Hunger Games), en Minecraft.
+
+Play the Hunger Games in your bukkit server.
+
+To start a new game, first you have to genereta a new world. Use:
+
+/hungerGames prepare
+
+When you have this world created, use this command to start the game. The player who execute this command will be the master of the game.
+
+/hungerGames start
+
+To stop a game, use
+
+/hungerGames stop
+

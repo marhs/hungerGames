@@ -4,6 +4,6 @@ version: 0.1
 
 commands:
   hungergames:
-    description: Comando para iniciar/detener los HungerGames
+    description: Play the Hunger Games!
     permission: hungerGames.hungergames
-    usage: /hungergames start/stop/alive/prepare
+    usage: /hungergames start/stop/status/prepare
