@@ -60,7 +60,7 @@ public class hungerGames extends JavaPlugin{
 		tareas = getServer().getScheduler();
 		
 		if(getServer().getWorld("hgWorld") == null){
-			getServer().getLogger().info("Creando mapa ...");
+			getServer().getLogger().info("[hungerGames] Creating world");
 			WorldCreator wcreator = new WorldCreator("hgWorld");
 			wcreator.environment(Environment.NORMAL);
 			wcreator.type(WorldType.NORMAL);
@@ -106,12 +106,12 @@ public class hungerGames extends JavaPlugin{
     					//Busca mundo hgWorld
     					world1 = getServer().getWorld("hgWorld");
     					if(world1 == null){
-    						player.sendMessage("Mapa no creado");
+    						player.sendMessage("World has not been created");
     						return false;
     					}
     					//Mapa modificado?
     					if(!preparado){
-    						player.sendMessage("Mapa no preparado, usa prepare");
+    						player.sendMessage("World not ready, use prepare");
     						return true;
     					}
     					
@@ -131,8 +131,7 @@ public class hungerGames extends JavaPlugin{
     							}
     						}, 0, 1);
     					 
-    					broadcast("Starting new game");
-    					broadcast("El juego empieza en 10 segundos");
+    					broadcast("Starting new game in 10 seconds");
     					Set<Player> jug = new HashSet<Player>();
     					Location spawnnuevo = new Location(world1
     							, world1.getSpawnLocation().getBlockX()
@@ -159,12 +158,12 @@ public class hungerGames extends JavaPlugin{
     						public void run() {
     							getHG().setMovementAllowed(true);
     	    					world1.setPVP(true);
-    							broadcast("Adelante!");
+    							broadcast("Started!");
     						}
     					}, 200L);
     					
     				} else {
-    					player.sendMessage("[hungerGames] Ya hay un juego en marcha");
+    					player.sendMessage("[hungerGames] There is a game in progress, use stop.");
     				}
     			} else
     				
@@ -182,12 +181,12 @@ public class hungerGames extends JavaPlugin{
     			// Comando "status": Te permite sabes si hay algœn juego activo, y los jugadores que quedan vivos.
     			if(args[0].equalsIgnoreCase("status") && args.length == 1) {
     				if(getHG().isActivo() == false) {
-    					player.sendMessage("No hay ningun juego activo");
+    					player.sendMessage("There is no game in progress");
     					return true;
     				} else {
-    					player.sendMessage("El juego esta en marcha");
+    					player.sendMessage("There is a game in progress");
     					if(player.equals(getHG().getMaster())){
-    						String msg ="Vivos: ";
+    						String msg ="Alive: ";
     						for(Player p:getHG().getVivos()){
     							msg += p.getName() + " ";
     						}
@@ -200,7 +199,7 @@ public class hungerGames extends JavaPlugin{
     			if(args[0].equalsIgnoreCase("prepare") && args.length == 1) {
     				if(getHG().isActivo()==false){
     					
-    					player.sendMessage("Preparando Mapa ... ");
+    					player.sendMessage("Creating world..");
 
     					if(getServer().getWorld("hgWorld")==null){
     						player.sendMessage("Creando mapa ...");
@@ -208,7 +207,7 @@ public class hungerGames extends JavaPlugin{
         					wcreator.environment(Environment.NORMAL);
         					wcreator.type(WorldType.NORMAL);
         					getServer().createWorld(wcreator);
-        					player.sendMessage("Mapa creado. Ahora usa de nuevo prepare ...");
+        					player.sendMessage("World created. Use prepare again");
     						return true;
     					}else{
     						
@@ -236,11 +235,11 @@ public class hungerGames extends JavaPlugin{
     						
     					}
     					
-    					player.sendMessage("Mapa preparado ahora puede iniciar el juego con start");
+    					player.sendMessage("World created, use start to start a new game");
     					return true;
-    					
+
     				}else{
-    					player.sendMessage("El juego está Activo");
+    					player.sendMessage("There is a game in progress");
     					return true;
     				}
     			
@@ -248,7 +247,7 @@ public class hungerGames extends JavaPlugin{
     			}
     			
     			else 
-    				player.sendMessage("HungerGames start/stop/alive/prepare");
+    				player.sendMessage("HungerGames start/status/prepare");
     			
    
     		}

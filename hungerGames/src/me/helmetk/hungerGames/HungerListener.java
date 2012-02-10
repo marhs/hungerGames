@@ -97,7 +97,7 @@ public class HungerListener implements Listener{
 				e += " "+p.getName();
 			}
 			plugin.getMuertosDiarios().clear();
-			plugin.broadcast("Los jugadores muertos hoy son:" +e);
+			plugin.broadcast("The players who died today are:" +e);
 			}
 		}
 		}
