@@ -49,7 +49,7 @@ public class HungerListener implements Listener{
 	// Elimina de la partida a un jugador cuando abandona el server, que no sea el master.
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		if(plugin.getHG().getVivos().contains(event.getPlayer()) && !plugin.getHG().getMaster().equals(event.getPlayer())){
+		if(plugin.getHG().getVivos().contains(event.getPlayer())){
 			plugin.getHG().getVivos().remove(event.getPlayer());
 			plugin.getMuertosDiarios().add(event.getPlayer());
 			//Mensaje De Salida Del Servidor
@@ -79,6 +79,7 @@ public class HungerListener implements Listener{
 	
 	@EventHandler
 	public void onCustomEvent(EventTimeDawn event){
+		if(plugin.getHG().isActivo()){
 		if(event instanceof EventTimeDawn){
 			if( !plugin.getMuertosDiarios().isEmpty() ){
 			String e = "";
@@ -89,6 +90,6 @@ public class HungerListener implements Listener{
 			plugin.broadcast("Los jugadores muertos hoy son:" +e);
 			}
 		}
-	
+		}
 	}
 }
