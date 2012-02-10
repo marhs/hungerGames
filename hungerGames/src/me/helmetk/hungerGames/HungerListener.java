@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -27,6 +28,8 @@ public class HungerListener implements Listener{
 			plugin.getHG().muerto(player);
 			player.kickPlayer("You has been slain");
 			plugin.getMuertosDiarios().add(player);
+			PlayerDeathEvent e1=(PlayerDeathEvent) event;
+			e1.setDeathMessage("");
 		}
 	}
 	

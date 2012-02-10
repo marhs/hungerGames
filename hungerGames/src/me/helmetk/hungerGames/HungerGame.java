@@ -86,7 +86,7 @@ public class HungerGame {
 		setVivos(players);
 		setInicio(inicio);
 		for(Player p:getVivos()) {
-			p.teleport(inicio);
+			//p.teleport(inicio);
 			p.setExp(0);
 			p.setLevel(0);
 			// TODO Investigar cual es el maximo foodLevel()

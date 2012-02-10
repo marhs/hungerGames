@@ -125,7 +125,9 @@ public class hungerGames extends JavaPlugin{
     							, world1.getSpawnLocation().getBlockZ());
     					for(Player p:getServer().getOnlinePlayers()){
     						jug.add(p);
-    						p.teleport(spawnnuevo);
+    						//Teletransporte a lugares aleatorios en el chunk
+    						p.teleport(spawnnuevo.add(new Location(world1
+    								, (Math.random()-Math.random())*16, 0, (Math.random()-Math.random())*16)));
     					}
     					getHG().startGame(player, jug, spawnnuevo);
     					broadcast("The master is " + getHG().getMaster().getName());
