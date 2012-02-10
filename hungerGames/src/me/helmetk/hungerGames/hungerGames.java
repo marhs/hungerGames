@@ -1,6 +1,8 @@
 package me.helmetk.hungerGames;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -16,16 +18,23 @@ import org.bukkit.command.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
 public class hungerGames extends JavaPlugin{
 	public HungerGame hg;
 	private Logger log = Logger.getLogger("Minecraft");
-	Set<Player> muertosDiarios = new HashSet<Player>();
+	private Set<Player> muertosDiarios = new HashSet<Player>();
 	private World world1 ;
-	BukkitScheduler tareas;
-	Boolean mensajeDelDia = false;
+	private BukkitScheduler tareas;
+	private Boolean mensajeDelDia = false;
+	private Boolean preparado=false;
+	
+	public Map<Player, ItemStack[]> Inventarios = new HashMap<Player, ItemStack[]>();
+	public Map<Player, ItemStack[]> Armaduras = new HashMap<Player, ItemStack[]>();
+	public HashMap<Player, Location> origLocation = new HashMap<Player, Location>();
+	public Map<Player, Float> Exps = new HashMap<Player, Float>();
 	
 	public Boolean getMensajeDelDia(){
 		return mensajeDelDia;
@@ -100,6 +109,12 @@ public class hungerGames extends JavaPlugin{
     						player.sendMessage("Mapa no creado");
     						return false;
     					}
+    					//Mapa modificado?
+    					if(!preparado){
+    						player.sendMessage("Mapa no preparado, usa prepare");
+    						return true;
+    					}
+    					
     					
     					//Actica tarea de control del tiempo
     					 tareas.scheduleAsyncRepeatingTask(this, new Runnable() {
@@ -125,6 +140,12 @@ public class hungerGames extends JavaPlugin{
     							, world1.getSpawnLocation().getBlockZ());
     					for(Player p:getServer().getOnlinePlayers()){
     						jug.add(p);
+    						//Guarda Inventarios y Locations y Exp
+    						Inventarios.put(p, p.getInventory().getContents());
+    						Armaduras.put(p, p.getInventory().getArmorContents());
+    						origLocation.put(p, p.getLocation());
+    						Exps.put(p, p.getExp());
+    						
     						//Teletransporte a lugares aleatorios en el chunk
     						p.teleport(spawnnuevo.add(new Location(world1
     								, (Math.random()-Math.random())*16, 0, (Math.random()-Math.random())*16)));
@@ -187,11 +208,9 @@ public class hungerGames extends JavaPlugin{
         					wcreator.environment(Environment.NORMAL);
         					wcreator.type(WorldType.NORMAL);
         					getServer().createWorld(wcreator);
-        					player.teleport(getServer().getWorld("hgWorld").getSpawnLocation());
         					player.sendMessage("Mapa creado. Ahora usa de nuevo prepare ...");
     						return true;
     					}else{
-    						player.teleport(getServer().getWorld("hgWorld").getSpawnLocation());
     						
     						World mundo1=getServer().getWorld("hgWorld");
     						Chunk source= mundo1.getSpawnLocation().getChunk();
@@ -212,6 +231,8 @@ public class hungerGames extends JavaPlugin{
     						ChunkInicio(mundo1.getChunkAt(spawnx-1, spawnz), spawny);
     						ChunkInicio(mundo1.getChunkAt(spawnx-1, spawnz+1), spawny);
     						ChunkInicio(mundo1.getChunkAt(spawnx-1, spawnz-1), spawny);
+    						
+    						preparado=true;
     						
     					}
     					
@@ -239,10 +260,16 @@ public class hungerGames extends JavaPlugin{
     
     public void resetPlayers(){
     	for(Player p:getHG().getVivos()){
-			p.teleport(getServer().getWorld("world").getSpawnLocation());
+    		p.setExp(Exps.get(p));
+    		p.getInventory().setContents(Inventarios.get(p));
+    		p.getInventory().setArmorContents(Armaduras.get(p));
+			p.teleport(origLocation.get(p));
 		}
 		for(Player p:getHG().getMuertos()){
-			p.teleport(getServer().getWorld("world").getSpawnLocation());
+			p.setExp(Exps.get(p));
+    		p.getInventory().setContents(Inventarios.get(p));
+    		p.getInventory().setArmorContents(Armaduras.get(p));
+    		p.teleport(origLocation.get(p));
 		}
     }
     
