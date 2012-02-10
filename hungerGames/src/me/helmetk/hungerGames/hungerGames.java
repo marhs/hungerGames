@@ -143,7 +143,7 @@ public class hungerGames extends JavaPlugin{
     							, world1.getHighestBlockYAt(world1.getSpawnLocation())
     							, world1.getSpawnLocation().getBlockZ());
     					for(Player p:getServer().getOnlinePlayers()){
-    						jug.add(p);
+    						if(player!=p)jug.add(p);
     						//Guarda Inventarios y Locations y Exp
     						Inventarios.put(p, p.getInventory().getContents());
     						Armaduras.put(p, p.getInventory().getArmorContents());
@@ -280,6 +280,12 @@ public class hungerGames extends JavaPlugin{
     		p.setHealth(Vida.get(p));
 			p.setFoodLevel(Comida.get(p));
 		}
+		getHG().getMaster().setExp(Exps.get(getHG().getMaster()));
+		getHG().getMaster().getInventory().setContents(Inventarios.get(getHG().getMaster()));
+		getHG().getMaster().getInventory().setArmorContents(Armaduras.get(getHG().getMaster()));
+		getHG().getMaster().teleport(origLocation.get(getHG().getMaster()));
+		getHG().getMaster().setHealth(Vida.get(getHG().getMaster()));
+		getHG().getMaster().setFoodLevel(Comida.get(getHG().getMaster()));
     }
     
     private void ChunkInicio(Chunk source,int spawny){
