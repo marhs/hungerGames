@@ -15,12 +15,12 @@ import org.bukkit.WorldType;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.command.*;
-import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.entity.Player;
 
 public class hungerGames extends JavaPlugin{
 	public HungerGame hg;
@@ -89,11 +89,14 @@ public class hungerGames extends JavaPlugin{
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
     	
-    	Player player = (Player) sender;
+    	if(!(sender instanceof Player))
+    		log.info("[hungerGames] This command can't be executed in console");
+    	else {
     	/* El nombre del comando es "hungerGames", que si se escribe solo /hungerGames
     	 * te devuelve la descripcion del plugin, despues definimos los comandos como
     	 * por ejemplo "/hungerGames start" */
     	if(cmd.getName().equalsIgnoreCase("hungerGames")){
+    		Player player = (Player) sender;
     		if(args.length == 0) {
     			// s
     			player.sendMessage("Hunger Games, v0.1 - To start a new game, use /hungerGames start");
@@ -253,8 +256,9 @@ public class hungerGames extends JavaPlugin{
     		}
     		return true;
     	}
-    	
+    	}	
     	return false;
+    
     }
     
     public void resetPlayers(){
