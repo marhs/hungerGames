@@ -5,6 +5,11 @@ import java.util.logging.Logger;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
+import spectator.Spectator;
+import spectator.SpectatorImpl;
+import spectator.spectatorListeners;
 
 
 public class HungerGame {
@@ -14,6 +19,8 @@ public class HungerGame {
 	private Location inicio;
 	private Player master;
 	private boolean movementAllowed;
+	private Spectator espectador;
+	private Plugin plugin;
 	
 	// Getters and setters.
 	public boolean isMovementAllowed() {
@@ -94,6 +101,11 @@ public class HungerGame {
 			p.setHealth(p.getMaxHealth());
 			p.getInventory().clear();
 		}
+		espectador=new SpectatorImpl(master);
+		plugin.getServer().getPluginManager().registerEvents(new spectatorListeners(espectador), plugin);
+		espectador.setSpectated(master);
+		espectador.Next();
+		espectador.setActivo(true);		
 		activo = true;
 	}
 	public void muerto(Player player){
@@ -132,11 +144,15 @@ public class HungerGame {
 		for(Player p:muertos){
 			p.sendMessage(msg);
 		}
+		master.sendMessage(msg);
+		
 		setMovementAllowed(true);
 		getVivos().addAll(getMuertos());
 		getMuertos().clear();
     	getLog().info(msg);
 		setActivo(false);
+		espectador.setActivo(false);
+		espectador.SpectatorVisible();
 	}
 	
 	
