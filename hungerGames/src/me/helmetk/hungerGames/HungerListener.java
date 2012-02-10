@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -29,7 +30,7 @@ public class HungerListener implements Listener{
 			player.kickPlayer("You has been slain");
 			plugin.getMuertosDiarios().add(player);
 			PlayerDeathEvent e1=(PlayerDeathEvent) event;
-			e1.setDeathMessage("");
+			e1.setDeathMessage("[huntergames] A player has been slain.");
 		}
 	}
 	
@@ -50,12 +51,21 @@ public class HungerListener implements Listener{
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		if(plugin.getHG().getVivos().contains(event.getPlayer())){
+			//Mensaje De Salida Del Servidor
+			event.setQuitMessage("");
 			plugin.getHG().getVivos().remove(event.getPlayer());
 			plugin.getMuertosDiarios().add(event.getPlayer());
-			//Mensaje De Salida Del Servidor
-			event.setQuitMessage("[hungerGames] A player has been slain");
+			
 			//Rayo en spawn
 			plugin.getServer().getWorld("hgWorld").strikeLightning(plugin.getServer().getWorld("hgWorld").getSpawnLocation());
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerKick(PlayerKickEvent event) {
+		if(plugin.getHG().getVivos().contains(event.getPlayer())){
+			//Mensaje De Salida Del Servidor
+			event.setLeaveMessage("");
 		}
 	}
 	
