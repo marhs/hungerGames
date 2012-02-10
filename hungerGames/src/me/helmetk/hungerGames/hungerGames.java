@@ -248,7 +248,7 @@ public class hungerGames extends JavaPlugin{
     			}
     			
     			else 
-    				player.sendMessage("HungerGames start/stop/alive");
+    				player.sendMessage("HungerGames start/stop/alive/prepare");
     			
    
     		}
