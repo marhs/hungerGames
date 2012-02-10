@@ -106,9 +106,6 @@ public class HungerGame {
 
 	}
 	public boolean isFinished() {
-		// Mientras esté en desarrollo, esto es == 0, pero deberia ser
-		// == 1, ya que debe haber un ganador. Si lo pruebo y estoy yo
-		// solo el juego termina justo al empezar.
 		return getVivos().size() < 2;
 	}
 	
