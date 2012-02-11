@@ -18,7 +18,7 @@ public class HungerGame {
 	private boolean activo;
 	private Location inicio;
 	private Player master;
-	private Boolean masterPlays;
+	private boolean masterPlays;
 	private boolean movementAllowed;
 	private Spectator espectador;
 	private Plugin plugin;
@@ -75,11 +75,11 @@ public class HungerGame {
 		return log;
 	}
 	// Esto determina si el master va a jugar la partida o no va a hacerlo.
-	public Boolean getMasterPlays() {
+	public boolean isMasterPlaying() {
 		return masterPlays;
 	}
 
-	public void setMasterPlays(Boolean masterPlays) {
+	public void setMasterPlaying(boolean masterPlays) {
 		this.masterPlays = masterPlays;
 	}
 
@@ -94,6 +94,7 @@ public class HungerGame {
 		this.vivos = set;
 		this.muertos = set2;
 		this.inicio = inicio;
+		this.masterPlays = false;
 	}
 	
 	// Empieza un juego nuevo. 
@@ -110,11 +111,13 @@ public class HungerGame {
 			p.setHealth(p.getMaxHealth());
 			p.getInventory().clear();
 		}
-		espectador=new SpectatorImpl(master);
-		plugin.getServer().getPluginManager().registerEvents(new spectatorListeners(espectador), plugin);
+		if( !isMasterPlaying() ) {
+			espectador=new SpectatorImpl(master);
+			plugin.getServer().getPluginManager().registerEvents(new spectatorListeners(espectador), plugin);
+			espectador.setActivo(true);
+		}
 		//espectador.setSpectated(master);
 		//espectador.Next();
-		espectador.setActivo(true);		
 		activo = true;
 		this.masterPlays = masterPlays;
 	}

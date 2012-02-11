@@ -112,6 +112,13 @@ public class hungerGames extends JavaPlugin{
     				} else {
     					player.sendMessage("[hungerGames] There is a game in progress, use stop.");
     				}
+    			} else if(args[0].equalsIgnoreCase("start") && args[1].equalsIgnoreCase("nomaster") && args.length == 2) {
+    				if(!getHG().isActivo()) {
+    					startGame(player, true);
+    					return true;
+    				} else {
+    					player.sendMessage("[hungerGames] There is a game in progress, use stop.");
+    				}
     			} else
     				
     			// Comando "stop": Con esto se termina el juego.
@@ -210,7 +217,7 @@ public class hungerGames extends JavaPlugin{
     			
     			
     			}
-    			if(args[0].equalsIgnoreCase("spectate") && args.length == 2) {
+    			if(args[0].equalsIgnoreCase("spectate") && args.length == 2 && !getHG().isMasterPlaying()) {
     				//Activar desactivar modo espectador
     				if(getHG().isActivo()){
     					if(args[1].equalsIgnoreCase("1")){
@@ -309,6 +316,7 @@ public class hungerGames extends JavaPlugin{
     }
     
     public boolean startGame(Player player, boolean masterJuega){
+    	getHG().setMasterPlaying(masterJuega);
     	// Comprueba que todos los mundos estan preparados
     	if (checkWorld(player))
     		return true;
@@ -328,7 +336,7 @@ public class hungerGames extends JavaPlugin{
 			}, 0, 1);
 		 
 		// Prepara a los jugadores
-		Set<Player> jug = preparePlayers(player, false);
+		Set<Player> jug = preparePlayers(player, masterJuega);
 		
 		Location spawnnuevo = new Location(world1
 				, world1.getSpawnLocation().getBlockX()
@@ -350,7 +358,7 @@ public class hungerGames extends JavaPlugin{
 			player.setFoodLevel(Comida.get(player));
 			return true;
 		}
-		getHG().startGame(player, jug, spawnnuevo, false);
+		getHG().startGame(player, jug, spawnnuevo, masterJuega);
 		broadcast("The master is " + getHG().getMaster().getName());
 		getHG().setMovementAllowed(false);
 		world1.setPVP(false);
