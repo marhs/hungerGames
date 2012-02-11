@@ -1,0 +1,6 @@
+TODO
+
+ - Comprobar porque un jugador que no es op no puede iniciar un juego
+ - Implementar el sistema de permisos (permissions.yml)
+ - Hacer que el master pueda jugar
+ - Que solo empiece el juego si hay 2 o más jugadores
