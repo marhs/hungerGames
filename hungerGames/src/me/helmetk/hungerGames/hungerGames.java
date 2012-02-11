@@ -266,6 +266,22 @@ public class hungerGames extends JavaPlugin{
     			
     			
     			}
+    			if(args[0].equalsIgnoreCase("spectator") && args.length == 2) {
+    				//Activar desactivar modo espectador
+    				if(getHG().isActivo()){
+    					if(args[1].equalsIgnoreCase("1")){
+    						getHG().getEspectador().Next();
+    						player.sendMessage("Spectating Started !");
+    					}
+    					if(args[1].equalsIgnoreCase("0")){
+    						getHG().getEspectador().setSpectated(null);
+    						player.sendMessage("Spectating Stopped !");
+    					}
+    				}else{
+    					player.sendMessage("There is not a game started.");
+    					return true;
+    				}
+    			}
     			
     			else 
     				player.sendMessage("HungerGames start/status/prepare");

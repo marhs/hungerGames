@@ -57,6 +57,7 @@ public class SpectatorImpl implements Spectator{
 
 	public void Next() {
 		List<Player> players= spectated.getWorld().getPlayers();
+		if(spectated == null)spectated=siguiente(0,players);
 		int pos= players.indexOf(spectated);
 		spectated=siguiente(pos+1,players);
 	}

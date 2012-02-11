@@ -20,10 +20,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class spectatorListeners implements Listener {
 	public Spectator sp;
 
-	int varx;
-	int vayr;
-	int varz;
-
 	public spectatorListeners (Spectator se){
 		sp=se;
 	}
@@ -32,7 +28,11 @@ public class spectatorListeners implements Listener {
 	public void onPlayerMove(PlayerMoveEvent event) {
 
 	if (sp.isActivo()) {
-
+	
+	if(sp.getSpectated() == null){
+		sp.getSpectator().getInventory().clear();
+	}
+	
 	if (sp.getSpectated() == event.getPlayer()) {
 
 	sp.getSpectator().teleport(sp.getSpectated());
@@ -56,14 +56,15 @@ public class spectatorListeners implements Listener {
 
 	if (sp.getSpectator() == event.getPlayer()) {
 
-	event.getPlayer().teleport(sp.getSpectated());
+		event.getPlayer().teleport(sp.getSpectated());
 
 		for (Player p : event.getPlayer().getWorld().getPlayers()) {
 		//Destruimos a todos el espectator
 		sp.getEntidad(p).netServerHandler.sendPacket(new Packet29DestroyEntity(event.getPlayer().getEntityId()));
 
 		}
-
+		
+		if(sp.getSpectated()!=null && sp.getSpectated().isOnline())
 		sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet29DestroyEntity(sp.getSpectated().getEntityId()));
 
 	}
@@ -79,19 +80,19 @@ public class spectatorListeners implements Listener {
 
 	if (sp.isActivo()) {
 		
-	if (sp.getSpectated() == event.getPlayer()) {
-
-	sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman) sp.getSpectated()));
+		if (sp.getSpectated() == event.getPlayer()) {
+			sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman) sp.getSpectated()));
+			sp.Next();
+		}
 	}
-
-	}
+	
 	}
 
 	@EventHandler
 	public void onPlayerPickupItem(PlayerPickupItemEvent event) {
 
 	if (sp.isActivo()) {
-		if (sp.getSpectator() == event.getPlayer()) {
+		if (sp.getSpectator() == event.getPlayer() && sp.getSpectated() != null) {
 			event.setCancelled(true);
 
 		}
@@ -103,7 +104,7 @@ public class spectatorListeners implements Listener {
 	public void onPlayerDropItem(PlayerDropItemEvent event) {
 
 	if (sp.isActivo()) {
-		if (sp.getSpectator() == event.getPlayer()) {
+		if (sp.getSpectator() == event.getPlayer() && sp.getSpectated() != null) {
 			sp.Next();
 		}
 	}
@@ -114,7 +115,7 @@ public class spectatorListeners implements Listener {
 	public void onBlockPlace(BlockPlaceEvent event) {
 
 	if (sp.isActivo() != null) {
-		if (sp.getSpectator() == event.getPlayer()) {
+		if (sp.getSpectator() == event.getPlayer() && sp.getSpectated() != null) {
 			event.setCancelled(true);
 		}
 	}
@@ -125,7 +126,7 @@ public class spectatorListeners implements Listener {
 	public void onBlockBreak(BlockBreakEvent event) {
 
 	if (sp.isActivo() != null) {
-		if (sp.getSpectator() == event.getPlayer()) {
+		if (sp.getSpectator() == event.getPlayer() && sp.getSpectated() != null) {
 			event.setCancelled(true);
 		}
 	}
@@ -154,8 +155,8 @@ public class spectatorListeners implements Listener {
 
 		if (sp.isActivo()) {
 
-			if (sp.getSpectated().equals(pla)) {
-				sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman)sp.getSpectated()));
+			if (sp.getSpectated() == pla) {
+				sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman)pla));
 				sp.Next();
 			}
 		}

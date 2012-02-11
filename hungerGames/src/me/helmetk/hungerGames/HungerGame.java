@@ -103,11 +103,16 @@ public class HungerGame {
 		}
 		espectador=new SpectatorImpl(master);
 		plugin.getServer().getPluginManager().registerEvents(new spectatorListeners(espectador), plugin);
-		espectador.setSpectated(master);
-		espectador.Next();
+		//espectador.setSpectated(master);
+		//espectador.Next();
 		espectador.setActivo(true);		
 		activo = true;
 	}
+	
+	public Spectator getEspectador (){
+		return espectador;
+	}
+	
 	public void muerto(Player player){
 		if(isActivo() == true){
 			getVivos().remove(player);
