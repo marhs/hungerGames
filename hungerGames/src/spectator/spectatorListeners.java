@@ -1,7 +1,6 @@
 package spectator;
 
 import net.minecraft.server.EntityHuman;
-import net.minecraft.server.Material;
 import net.minecraft.server.Packet20NamedEntitySpawn;
 import net.minecraft.server.Packet29DestroyEntity;
 

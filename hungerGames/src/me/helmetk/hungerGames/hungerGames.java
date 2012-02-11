@@ -142,6 +142,7 @@ public class hungerGames extends JavaPlugin{
     							, world1.getSpawnLocation().getBlockX()
     							, world1.getHighestBlockYAt(world1.getSpawnLocation())
     							, world1.getSpawnLocation().getBlockZ());
+    					
     					for(Player p:getServer().getOnlinePlayers()){
     						if(player!=p)jug.add(p);
     						//Guarda Inventarios y Locations y Exp
@@ -158,6 +159,12 @@ public class hungerGames extends JavaPlugin{
     					}
     					if(jug.isEmpty()){
     						broadcast("There isn't players.");
+    						player.setExp(Exps.get(player));
+    						player.getInventory().setContents(Inventarios.get(player));
+    						player.getInventory().setArmorContents(Armaduras.get(player));
+    						player.teleport(origLocation.get(player));
+    						player.setHealth(Vida.get(player));
+    						player.setFoodLevel(Comida.get(player));
     						return true;
     					}
     					getHG().startGame(player, jug, spawnnuevo);
@@ -241,7 +248,7 @@ public class hungerGames extends JavaPlugin{
     						
     						int spawnx = source.getX();
     						int spawnz = source.getZ();
-    						int spawny = mundo1.getHighestBlockYAt(spawnx, spawnz);
+    						int spawny = mundo1.getHighestBlockYAt(spawnx, spawnz) - 4;
     						
     						//Limpiado de Inicio
     						ChunkInicio(source, spawny);
@@ -249,12 +256,16 @@ public class hungerGames extends JavaPlugin{
     						ChunkInicio(mundo1.getChunkAt(spawnx, spawnz-1), spawny);
     						
     						ChunkInicio(mundo1.getChunkAt(spawnx+1, spawnz), spawny);
-    						ChunkInicio(mundo1.getChunkAt(spawnx+1, spawnz+1), spawny);
-    						ChunkInicio(mundo1.getChunkAt(spawnx+1, spawnz-1), spawny);
+    						//Todo chunk semicirculo
+    						//ChunkInicio(mundo1.getChunkAt(spawnx+1, spawnz+1), spawny);
+    						//ChunkInicio(mundo1.getChunkAt(spawnx+1, spawnz-1), spawny);
     						
+    						//Todo chunk semicirculo
     						ChunkInicio(mundo1.getChunkAt(spawnx-1, spawnz), spawny);
-    						ChunkInicio(mundo1.getChunkAt(spawnx-1, spawnz+1), spawny);
-    						ChunkInicio(mundo1.getChunkAt(spawnx-1, spawnz-1), spawny);
+    						//ChunkInicio(mundo1.getChunkAt(spawnx-1, spawnz+1), spawny);
+    						//ChunkInicio(mundo1.getChunkAt(spawnx-1, spawnz-1), spawny);
+    						
+    						//player.teleport(mundo1.getSpawnLocation());
     						
     						preparado=true;
     						
