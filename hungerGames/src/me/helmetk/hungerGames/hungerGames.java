@@ -123,29 +123,36 @@ public class hungerGames extends JavaPlugin{
     				
     			// Comando "stop": Con esto se termina el juego.
     			if(args[0].equalsIgnoreCase("stop") && args.length == 1 && player.equals(getHG().getMaster())) {
-    				//Finalizael juego si no esta finalizado
-    				broadcast("Stopping Hunger Games");
-    				if(getHG().isActivo()){
-    					getHG().finish();
-    				}
-    				broadcast("Waiting for all players reconnect ...");
-    				//Espera a que todos los jugadores se reconecten y esten vivos.
-    				boolean reconectados=true;
-    				while(reconectados){
-    					for(Player p:getHG().getVivos()){
-    						reconectados &= !p.isDead();
+    				//Comprueba si ha sido inciado algun juego
+    					if(getHG().getMaster() != null){
+    					//Finalizael juego si no esta finalizado
+    					broadcast("Stopping Hunger Games");
+    					if(getHG().isActivo()){
+    						getHG().finish();
     					}
-    					try {
-							Thread.sleep(10);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+    					broadcast("Waiting for all players reconnect ...");
+    					//Espera a que todos los jugadores se reconecten y esten vivos.
+    					boolean reconectados=true;
+    					while(reconectados){
+    						for(Player p:getHG().getVivos()){
+    							reconectados &= !p.isDead();
+    						}
+    						try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+    					}
+    					broadcast("Start teleport come back ...");
+    					//Teletransporte al otromundo
+    					resetPlayers();
+    					getHG().setMaster(null);
+    					broadcast("Huger Games Stopped !");
+    					return true;
+    				}else{
+    					broadcast("There isn't a game started");
+    					return false;
     				}
-    				broadcast("Start teleport come back ...");
-    				//Teletransporte al otromundo
-    				resetPlayers();
-    				broadcast("Huger Games Stopped !");
-    				return true;
     			} else
     				
     			// Comando "status": Te permite sabes si hay algœn juego activo, y los jugadores que quedan vivos.
