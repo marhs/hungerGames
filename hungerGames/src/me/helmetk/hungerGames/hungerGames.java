@@ -130,6 +130,7 @@ public class hungerGames extends JavaPlugin{
     				}
     				broadcast("Waiting for all players reconnect ...");
     				//Espera a que todos los jugadores se reconecten y esten vivos.
+    				// Nota: Las dos siguientes lineas no sirven de nada.
     				boolean reconectados=true;
     				while(reconectados){
     					for(Player p:getHG().getVivos()){
@@ -346,7 +347,7 @@ public class hungerGames extends JavaPlugin{
 		for(Player p:getServer().getOnlinePlayers()){	
 			//Teletransporte a lugares aleatorios en el chunk
 			p.teleport(spawnnuevo.add(new Location(world1
-					, (Math.random()-Math.random())*16, 0, (Math.random()-Math.random())*16)));
+					, (Math.random()-Math.random())*8, 0, (Math.random()-Math.random())*8)));
 		}
 		if(jug.isEmpty()){
 			broadcast("There isn't players.");

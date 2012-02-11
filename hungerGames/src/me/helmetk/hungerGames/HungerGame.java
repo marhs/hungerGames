@@ -169,8 +169,10 @@ public class HungerGame {
 		getMuertos().clear();
     	getLog().info(msg);
 		setActivo(false);
-		espectador.setActivo(false);
-		espectador.SpectatorVisible();
+		if(!isMasterPlaying()){
+			espectador.setActivo(false);
+			espectador.SpectatorVisible();
+		}
 	}
 	
 	
