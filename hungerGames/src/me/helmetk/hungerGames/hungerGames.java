@@ -8,19 +8,16 @@ import java.util.logging.Logger;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 import org.bukkit.World.Environment;
-import org.bukkit.block.Block;
 import org.bukkit.command.*;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.entity.Player;
+
 
 public class hungerGames extends JavaPlugin{
 	public HungerGame hg;
