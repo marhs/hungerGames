@@ -130,7 +130,7 @@ public class hungerGames extends JavaPlugin{
     				}
     				broadcast("Waiting for all players reconnect ...");
     				//Espera a que todos los jugadores se reconecten y esten vivos.
-    				// Nota: Las dos siguientes lineas no sirven de nada.
+    				
     				boolean reconectados=true;
     				while(reconectados){
     					for(Player p:getHG().getVivos()){
