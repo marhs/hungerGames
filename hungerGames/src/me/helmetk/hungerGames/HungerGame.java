@@ -18,6 +18,7 @@ public class HungerGame {
 	private boolean activo;
 	private Location inicio;
 	private Player master;
+	private Boolean masterPlays;
 	private boolean movementAllowed;
 	private Spectator espectador;
 	private Plugin plugin;
@@ -73,7 +74,15 @@ public class HungerGame {
 	public Logger getLog() {
 		return log;
 	}
-	
+	// Esto determina si el master va a jugar la partida o no va a hacerlo.
+	public Boolean getMasterPlays() {
+		return masterPlays;
+	}
+
+	public void setMasterPlays(Boolean masterPlays) {
+		this.masterPlays = masterPlays;
+	}
+
 	// Constructor
 	public HungerGame(Player[] players, Location inicio) {
 		Set<Player> set = new HashSet<Player>();
@@ -88,7 +97,7 @@ public class HungerGame {
 	}
 	
 	// Empieza un juego nuevo. 
-	public void startGame(Player master, Set<Player> players, Location inicio) {
+	public void startGame(Player master, Set<Player> players, Location inicio, Boolean masterPlays) {
 		setMaster(master);
 		setVivos(players);
 		setInicio(inicio);
@@ -107,6 +116,7 @@ public class HungerGame {
 		//espectador.Next();
 		espectador.setActivo(true);		
 		activo = true;
+		this.masterPlays = masterPlays;
 	}
 	
 	public Spectator getEspectador (){
