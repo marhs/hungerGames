@@ -138,7 +138,7 @@ public class hungerGames extends JavaPlugin{
     						for(Player p:getHG().getVivos()){
     							b1 &= !p.isDead();
     						}
-    						if(b1)reconectados=true;
+    						if(b1)reconectados=false;
     						try {
 								Thread.sleep(10);
 							} catch (InterruptedException e) {
