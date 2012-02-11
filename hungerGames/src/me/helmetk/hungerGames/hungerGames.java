@@ -132,24 +132,31 @@ public class hungerGames extends JavaPlugin{
     					}
     					broadcast("Waiting for all players reconnect ...");
     					//Espera a que todos los jugadores se reconecten y esten vivos.
-    					boolean reconectados=true;
-    					while(reconectados){
-    						boolean b1=true;
-    						for(Player p:getHG().getVivos()){
-    							b1 &= !p.isDead();
-    						}
-    						if(b1)reconectados=false;
-    						try {
-								Thread.sleep(10);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
+    					tareas.scheduleAsyncDelayedTask(this, new Runnable() {
+							//Tarea para esperar a los jugadores
+							public void run() {
+								boolean reconectados=true;
+		    					while(reconectados){
+		    						boolean b1=true;
+		    						for(Player p:getHG().getVivos()){
+		    							b1 &= !p.isDead();
+		    						}
+		    						if(b1)reconectados=false;
+		    						try {
+										Thread.sleep(10);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
+		    					}
+		    					broadcast("Start teleport come back ...");
+		    					//Teletransporte al otromundo
+		    					resetPlayers();
+		    					getHG().setMaster(null);
+		    					broadcast("Huger Games Stopped !");
+								
 							}
-    					}
-    					broadcast("Start teleport come back ...");
-    					//Teletransporte al otromundo
-    					resetPlayers();
-    					getHG().setMaster(null);
-    					broadcast("Huger Games Stopped !");
+						});
+    					
     					return true;
     				}else{
     					broadcast("There isn't a game started");
