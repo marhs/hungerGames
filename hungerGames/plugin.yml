@@ -6,4 +6,4 @@ commands:
   hungergames:
     description: Play the Hunger Games!
     permission: hungerGames.hungergames
-    usage: /hungergames start/stop/status/prepare
+    usage: /hungergames start/stop/status/prepare or spectate 1/0
