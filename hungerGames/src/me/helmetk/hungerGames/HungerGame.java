@@ -84,12 +84,9 @@ public class HungerGame {
 	}
 
 	// Constructor
-	public HungerGame(Player[] players, Location inicio) {
+	public HungerGame(Location inicio) {
 		Set<Player> set = new HashSet<Player>();
 		Set<Player> set2 = new HashSet<Player>();
-		for(Player p:players) {
-			set.add(p);
-		}
 		this.movementAllowed = true;
 		this.vivos = set;
 		this.muertos = set2;

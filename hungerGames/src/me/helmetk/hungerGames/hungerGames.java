@@ -71,7 +71,7 @@ public class hungerGames extends JavaPlugin{
 		}
 		
 		log.info("[Hunger Games] ready!");
-    	hg = new HungerGame(this.getServer().getOnlinePlayers(), getServer().getWorld("world").getSpawnLocation().add(0, 2, 0));
+    	hg = new HungerGame(getServer().getWorld("world").getSpawnLocation().add(0, 2, 0));
     }
     
     public void onDisable() { 
@@ -130,7 +130,6 @@ public class hungerGames extends JavaPlugin{
     				}
     				broadcast("Waiting for all players reconnect ...");
     				//Espera a que todos los jugadores se reconecten y esten vivos.
-    				
     				boolean reconectados=true;
     				while(reconectados){
     					for(Player p:getHG().getVivos()){
