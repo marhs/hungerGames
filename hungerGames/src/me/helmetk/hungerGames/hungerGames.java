@@ -107,61 +107,8 @@ public class hungerGames extends JavaPlugin{
     			if(args[0].equalsIgnoreCase("start") && args.length == 1){
     				
     				if(!getHG().isActivo()) {
-    					
-    					//Comprueba si los mundos estan bien creados y preparados
-    					checkWorld(player);
-    					// Activa tarea de control del tiempo
-    					tareas.scheduleAsyncRepeatingTask(this, new Runnable() {
-    							@Override
-    							public void run() {
-    								Long Hora=world1.getTime();
-    								
-    								if( Hora == 18000 && getMensajeDelDia() == false){
-    									getServer().getPluginManager().callEvent(new EventTimeDawn());
-    								}
-    								if( getMensajeDelDia() == true && Hora >0 && Hora < 1000){
-    									setMensajeDelDia(false);
-    								}
-    							}
-    						}, 0, 1);
-    					 
-    					broadcast("Starting new game in 10 seconds");
-    					// Prepara a los jugadores
-    					Set<Player> jug = preparePlayers(player, false);
-    					
-    					Location spawnnuevo = new Location(world1
-    							, world1.getSpawnLocation().getBlockX()
-    							, world1.getHighestBlockYAt(world1.getSpawnLocation())
-    							, world1.getSpawnLocation().getBlockZ());
-    					
-    					for(Player p:getServer().getOnlinePlayers()){	
-    						//Teletransporte a lugares aleatorios en el chunk
-    						p.teleport(spawnnuevo.add(new Location(world1
-    								, (Math.random()-Math.random())*16, 0, (Math.random()-Math.random())*16)));
-    					}
-    					if(jug.isEmpty()){
-    						broadcast("There isn't players.");
-    						player.setExp(Exps.get(player));
-    						player.getInventory().setContents(Inventarios.get(player));
-    						player.getInventory().setArmorContents(Armaduras.get(player));
-    						player.teleport(origLocation.get(player));
-    						player.setHealth(Vida.get(player));
-    						player.setFoodLevel(Comida.get(player));
-    						return true;
-    					}
-    					getHG().startGame(player, jug, spawnnuevo, false);
-    					broadcast("The master is " + getHG().getMaster().getName());
-    					getHG().setMovementAllowed(false);
-    					world1.setPVP(false);
-    					// Tarea retrasada, el tiempo (200L) viene dado en ticks, hay 20 ticks por segundo.
-    					getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-    						public void run() {
-    							getHG().setMovementAllowed(true);
-    	    					world1.setPVP(true);
-    							broadcast("Started!");
-    						}
-    					}, 200L);
-    					
+    					startGame(player, false);
+    					return true;
     				} else {
     					player.sendMessage("[hungerGames] There is a game in progress, use stop.");
     				}
@@ -306,7 +253,7 @@ public class hungerGames extends JavaPlugin{
 			Vida.put(p, p.getHealth());
 			Comida.put(p, p.getFoodLevel());
 		}
-		return null;
+		return jug;
 	}
 
 	public void resetPlayers(){
@@ -358,7 +305,65 @@ public class hungerGames extends JavaPlugin{
 			player.sendMessage("World not ready, use prepare");
 			return true;
 		}
-		return true;
+		return false;
+    }
+    
+    public boolean startGame(Player player, boolean masterJuega){
+    	// Comprueba que todos los mundos estan preparados
+    	if (checkWorld(player))
+    		return true;
+		// Activa tarea de control del tiempo
+		tareas.scheduleAsyncRepeatingTask(this, new Runnable() {
+				@Override
+				public void run() {
+					Long Hora=world1.getTime();
+					
+					if( Hora == 18000 && getMensajeDelDia() == false){
+						getServer().getPluginManager().callEvent(new EventTimeDawn());
+					}
+					if( getMensajeDelDia() == true && Hora >0 && Hora < 1000){
+						setMensajeDelDia(false);
+					}
+				}
+			}, 0, 1);
+		 
+		// Prepara a los jugadores
+		Set<Player> jug = preparePlayers(player, false);
+		
+		Location spawnnuevo = new Location(world1
+				, world1.getSpawnLocation().getBlockX()
+				, world1.getHighestBlockYAt(world1.getSpawnLocation())
+				, world1.getSpawnLocation().getBlockZ());
+		
+		for(Player p:getServer().getOnlinePlayers()){	
+			//Teletransporte a lugares aleatorios en el chunk
+			p.teleport(spawnnuevo.add(new Location(world1
+					, (Math.random()-Math.random())*16, 0, (Math.random()-Math.random())*16)));
+		}
+		if(jug.isEmpty()){
+			broadcast("There isn't players.");
+			player.setExp(Exps.get(player));
+			player.getInventory().setContents(Inventarios.get(player));
+			player.getInventory().setArmorContents(Armaduras.get(player));
+			player.teleport(origLocation.get(player));
+			player.setHealth(Vida.get(player));
+			player.setFoodLevel(Comida.get(player));
+			return true;
+		}
+		getHG().startGame(player, jug, spawnnuevo, false);
+		broadcast("The master is " + getHG().getMaster().getName());
+		getHG().setMovementAllowed(false);
+		world1.setPVP(false);
+		broadcast("Starting new game in 10 seconds");
+		// Tarea retrasada, el tiempo (200L) viene dado en ticks, hay 20 ticks por segundo.
+		getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+			public void run() {
+				getHG().setMovementAllowed(true);
+				world1.setPVP(true);
+				broadcast("Started!");
+			}
+		}, 200L);
+    	return true;    	
     }
 }
 
