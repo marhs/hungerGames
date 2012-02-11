@@ -1,6 +1,7 @@
 package spectator;
 
 import net.minecraft.server.EntityHuman;
+import net.minecraft.server.Material;
 import net.minecraft.server.Packet20NamedEntitySpawn;
 import net.minecraft.server.Packet29DestroyEntity;
 
@@ -16,6 +17,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class spectatorListeners implements Listener {
 	public Spectator sp;
@@ -33,11 +35,13 @@ public class spectatorListeners implements Listener {
 		sp.getSpectator().getInventory().clear();
 	}
 	
-	if (sp.getSpectated() == event.getPlayer()) {
+	if (sp.getSpectated() == event.getPlayer() && sp.getSpectated().isOnline()) {
 
 	sp.getSpectator().teleport(sp.getSpectated());
 	sp.getSpectator().getInventory().clear();
 	sp.getSpectator().getInventory().setContents(event.getPlayer().getInventory().getContents());
+	if(sp.getSpectated().getInventory().getContents()[0] == null)
+		sp.getSpectator().getInventory().getContents()[0]=new ItemStack(org.bukkit.Material.DRAGON_EGG);
 	sp.getSpectator().getInventory().setArmorContents(event.getPlayer().getInventory().getArmorContents());
 
 	for (Player p : sp.getSpectated().getWorld().getPlayers()) {
@@ -56,8 +60,10 @@ public class spectatorListeners implements Listener {
 
 	if (sp.getSpectator() == event.getPlayer()) {
 
+		if(sp.getSpectated() != null)
 		event.getPlayer().teleport(sp.getSpectated());
 
+		
 		for (Player p : event.getPlayer().getWorld().getPlayers()) {
 		//Destruimos a todos el espectator
 		sp.getEntidad(p).netServerHandler.sendPacket(new Packet29DestroyEntity(event.getPlayer().getEntityId()));
@@ -92,7 +98,7 @@ public class spectatorListeners implements Listener {
 	public void onPlayerPickupItem(PlayerPickupItemEvent event) {
 
 	if (sp.isActivo()) {
-		if (sp.getSpectator() == event.getPlayer() && sp.getSpectated() != null) {
+		if (sp.getSpectator() == event.getPlayer()) {
 			event.setCancelled(true);
 
 		}
@@ -106,6 +112,10 @@ public class spectatorListeners implements Listener {
 	if (sp.isActivo()) {
 		if (sp.getSpectator() == event.getPlayer() && sp.getSpectated() != null) {
 			sp.Next();
+		}else{
+			if(sp.getSpectator() == event.getPlayer()){
+				event.setCancelled(true);
+			}
 		}
 	}
 
@@ -115,7 +125,7 @@ public class spectatorListeners implements Listener {
 	public void onBlockPlace(BlockPlaceEvent event) {
 
 	if (sp.isActivo() != null) {
-		if (sp.getSpectator() == event.getPlayer() && sp.getSpectated() != null) {
+		if (sp.getSpectator() == event.getPlayer()) {
 			event.setCancelled(true);
 		}
 	}
@@ -126,7 +136,7 @@ public class spectatorListeners implements Listener {
 	public void onBlockBreak(BlockBreakEvent event) {
 
 	if (sp.isActivo() != null) {
-		if (sp.getSpectator() == event.getPlayer() && sp.getSpectated() != null) {
+		if (sp.getSpectator() == event.getPlayer()) {
 			event.setCancelled(true);
 		}
 	}
@@ -155,7 +165,7 @@ public class spectatorListeners implements Listener {
 
 		if (sp.isActivo()) {
 
-			if (sp.getSpectated() == pla) {
+			if (sp.getSpectated() == pla && sp.getSpectated() != null) {
 				sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman)pla));
 				sp.Next();
 			}

@@ -156,6 +156,10 @@ public class hungerGames extends JavaPlugin{
     						p.teleport(spawnnuevo.add(new Location(world1
     								, (Math.random()-Math.random())*16, 0, (Math.random()-Math.random())*16)));
     					}
+    					if(jug.isEmpty()){
+    						broadcast("There isn't players.");
+    						return true;
+    					}
     					getHG().startGame(player, jug, spawnnuevo);
     					broadcast("The master is " + getHG().getMaster().getName());
     					getHG().setMovementAllowed(false);
@@ -266,7 +270,7 @@ public class hungerGames extends JavaPlugin{
     			
     			
     			}
-    			if(args[0].equalsIgnoreCase("spectator") && args.length == 2) {
+    			if(args[0].equalsIgnoreCase("spectate") && args.length == 2) {
     				//Activar desactivar modo espectador
     				if(getHG().isActivo()){
     					if(args[1].equalsIgnoreCase("1")){
