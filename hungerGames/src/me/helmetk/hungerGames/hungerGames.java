@@ -203,19 +203,19 @@ public class hungerGames extends JavaPlugin{
     						int spawny = mundo1.getHighestBlockYAt(spawnx, spawnz) - 4;
     						
     						//Limpiado de Inicio
-    						ChunkUtil.ChunkInicio(source, spawny);
-    						ChunkUtil.ChunkInicio(mundo1.getChunkAt(spawnx, spawnz+1), spawny);
-    						ChunkUtil.ChunkInicio(mundo1.getChunkAt(spawnx, spawnz-1), spawny);
+    						ChunkUtil.ChunkInicio(source, spawny,"");
+    						ChunkUtil.ChunkInicio(mundo1.getChunkAt(spawnx, spawnz+1), spawny,"N");
+    						ChunkUtil.ChunkInicio(mundo1.getChunkAt(spawnx, spawnz-1), spawny,"S");
     						
-    						ChunkUtil.ChunkInicio(mundo1.getChunkAt(spawnx+1, spawnz), spawny);
-    						//Todo chunk semicirculo
-    						//ChunkInicio(mundo1.getChunkAt(spawnx+1, spawnz+1), spawny);
-    						//ChunkInicio(mundo1.getChunkAt(spawnx+1, spawnz-1), spawny);
+    						ChunkUtil.ChunkInicio(mundo1.getChunkAt(spawnx+1, spawnz), spawny,"E");
+    						//Chunk Semicirculo Este
+    						ChunkUtil.limpiarChunkSemicirculo(mundo1.getChunkAt(spawnx+1, spawnz+1), spawny, "NE");
+    						ChunkUtil.limpiarChunkSemicirculo(mundo1.getChunkAt(spawnx+1, spawnz-1), spawny, "SE");
     						
-    						//Todo chunk semicirculo
-    						ChunkUtil.ChunkInicio(mundo1.getChunkAt(spawnx-1, spawnz), spawny);
-    						//ChunkInicio(mundo1.getChunkAt(spawnx-1, spawnz+1), spawny);
-    						//ChunkInicio(mundo1.getChunkAt(spawnx-1, spawnz-1), spawny);
+    						//Chunk Semicirculo Oeste
+    						ChunkUtil.ChunkInicio(mundo1.getChunkAt(spawnx-1, spawnz), spawny,"O");
+    						ChunkUtil.limpiarChunkSemicirculo(mundo1.getChunkAt(spawnx-1, spawnz+1), spawny, "NO");
+    						ChunkUtil.limpiarChunkSemicirculo(mundo1.getChunkAt(spawnx-1, spawnz-1), spawny, "SO");
     						
     						//player.teleport(mundo1.getSpawnLocation());
     						

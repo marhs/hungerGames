@@ -6,23 +6,30 @@ import org.bukkit.block.Block;
 
 public class ChunkUtil {
 
-    public static void ChunkInicio(Chunk source,int spawny){
+    public static void ChunkInicio(Chunk source,int spawny,String direc){
     	for(int x1=0;x1<16;x1++){
-			limpiarChunkAtX(source, spawny, x1);
+			limpiarChunkAtX(source, spawny, x1,16,0);
 		}
     	//Chunk 1
-    	Chunk c1=source.getWorld().getChunkAt(source.getX(), source.getZ()+1);
-    	limpiarChunkNorte(c1, spawny);
+    	if(direc == "N"){
+    		Chunk c1=source.getWorld().getChunkAt(source.getX(), source.getZ()+1);
+    		limpiarChunkNorte(c1, spawny);
+    	}
     	//Chunk 2
-    	Chunk c2=source.getWorld().getChunkAt(source.getX()+1, source.getZ());
-    	limpiarChunkEste(c2, spawny);
+    	if(direc == "E"){
+    		Chunk c2=source.getWorld().getChunkAt(source.getX()+1, source.getZ());
+    		limpiarChunkEste(c2, spawny);
+    	}
     	//Chunk 3
-    	Chunk c3=source.getWorld().getChunkAt(source.getX(), source.getZ()-1);
-    	limpiarChunkSur(c3, spawny);
+    	if(direc == "S"){
+    		Chunk c3=source.getWorld().getChunkAt(source.getX(), source.getZ()-1);
+    		limpiarChunkSur(c3, spawny);
+    	}
     	//Chunk 4
-    	Chunk c4=source.getWorld().getChunkAt(source.getX()-1, source.getZ());
-    	limpiarChunkOeste(c4, spawny);
-    	
+    	if(direc == "O"){
+    		Chunk c4=source.getWorld().getChunkAt(source.getX()-1, source.getZ());
+    		limpiarChunkOeste(c4, spawny);
+    	}
     }
     
     public static void limpiarChunkEste(Chunk source,int spawny){
@@ -37,7 +44,7 @@ public class ChunkUtil {
     			}
     		}
     		if(needed){
-    			limpiarChunkAtX(source, spawny+1, x);
+    			limpiarChunkAtX(source, spawny+1, x,16,0);
     		}
     		spawny++;
     	}
@@ -53,7 +60,7 @@ public class ChunkUtil {
     			}
     		}
     		if(needed){
-    			limpiarChunkAtZ(source, spawny+1, z);
+    			limpiarChunkAtZ(source, spawny+1, z,16,0);
     		}
     		spawny++;
     	}
@@ -69,7 +76,7 @@ public class ChunkUtil {
     			}
     		}
     		if(needed){
-    			limpiarChunkAtX(source, spawny+1, x);
+    			limpiarChunkAtX(source, spawny+1, x,16,0);
     		}
     		spawny++;
     	}
@@ -85,14 +92,50 @@ public class ChunkUtil {
     			}
     		}
     		if(needed){
-    				limpiarChunkAtZ(source, spawny+1, z);
+    				limpiarChunkAtZ(source, spawny+1, z,16,0);
     			}
     		spawny++;
     	}
     }
+    
+    public static void limpiarChunkSemicirculo (Chunk source,Integer spawny, String direc){
+    	Integer[] puntos=semicirculo(15, 16);
+    	if(direc == "NE"){
+    		for(Integer p=0;p<16;p++){
+    			limpiarChunkAtX(source, spawny, p, puntos[p]+1,0);
+    		}
+    	}
+    	if(direc == "NO"){
+    		for(Integer p=0;p<16;p++){
+    			limpiarChunkAtX(source, spawny, 15-p, puntos[p]+1, 0);
+    		}
+    	}
+    	if(direc == "SE"){
+    		for(Integer p=0;p<16;p++){
+    			limpiarChunkAtX(source, spawny, p, 16, 15-puntos[p]);
+    		}
+    	}
+    	if(direc == "SO"){
+    		for(Integer p=0;p<16;p++){
+    			limpiarChunkAtX(source, spawny, 15-p, 16, 15-puntos[p]);
+    		}
+    	}
+    }
+    
+    public static Integer[] semicirculo (Integer radio, Integer ancho){
+    	Integer[] result = new Integer[ancho];
+    	for(Integer x=ancho;x >0;x--){
+    		Double a = Math.sqrt(Math.pow(radio, 2) - Math.pow(x, 2));
+    		if(radio < x){
+    			a=-1.00;
+    		}
+    		result[x-1]=(int) Math.floor(a);
+    	}
+    	return result;
+    }
 
-    public static  void limpiarChunkAtX(Chunk source,int spawny,int X){
-    	for(int z1=0;z1<16;z1++){
+    public static  void limpiarChunkAtX(Chunk source,Integer spawny,Integer X,Integer hasta,Integer desde){
+    	for(Integer z1=desde;z1<hasta;z1++){
 			//result[(x1 * 16 + z1) * 128 + spawny]=(byte)Material.BEDROCK.getId();
 			Block bloque=source.getBlock(X, spawny, z1);
 			bloque.setType(Material.BEDROCK);
@@ -100,8 +143,8 @@ public class ChunkUtil {
 		}
     }
     
-    public static  void limpiarChunkAtZ(Chunk source,int spawny,int Z){
-    	for(int z1=0;z1<16;z1++){
+    public static  void limpiarChunkAtZ(Chunk source,Integer spawny,Integer Z,Integer hasta,Integer desde){
+    	for(Integer z1=desde;z1<hasta;z1++){
 			//result[(x1 * 16 + z1) * 128 + spawny]=(byte)Material.BEDROCK.getId();
 			Block bloque=source.getBlock(z1, spawny, Z);
 			bloque.setType(Material.BEDROCK);
