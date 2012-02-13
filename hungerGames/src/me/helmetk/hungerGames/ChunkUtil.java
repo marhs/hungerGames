@@ -36,65 +36,66 @@ public class ChunkUtil {
     	//int y=source.getWorld().getHighestBlockYAt(source.getBlock(15, spawny, 7).getLocation());
     	//Limpiar en forma de escalera
     	for(int x=0;x<16;x++){
-    		int pase;boolean needed=false;
+    		boolean needed=false;
     		for(int p=0;p<16;p++){
-    			pase=source.getWorld().getHighestBlockYAt(source.getBlock(x, spawny, p).getLocation())-spawny;
-    			if(pase > 2){
-    				needed=true;break;
+    			Block pase= source.getBlock(x, spawny-1, p);
+    			if(pase.getType() == Material.AIR || pase.getType() == Material.LEAVES || pase.getType() == Material.WOOD){
+    				needed=true;break;    			
     			}
     		}
     		if(needed){
-    			limpiarChunkAtX(source, spawny+1, x,16,0);
+    			limpiarChunkAtX(source, spawny-1, x,16,0);
     		}
-    		spawny++;
+    		spawny--;
     	}
     }
     
     public static void limpiarChunkNorte(Chunk source,int spawny){
     	for(int z=0;z<16;z++){
-    		int pase;boolean needed=false;
+    		boolean needed=false;
     		for(int p=0;p<16;p++){
-    			pase=source.getWorld().getHighestBlockYAt(source.getBlock(p, spawny, z).getLocation())-spawny;
-    			if(pase > 2){
-    				needed=true;break;
+    			//pase=source.getWorld().getHighestBlockYAt(source.getBlock(p, spawny, z).getLocation())-spawny;
+    			Block pase= source.getBlock(p, spawny-1, z);
+    			if(pase.getType() == Material.AIR || pase.getType() == Material.LEAVES || pase.getType() == Material.WOOD){
+    				needed=true;break;    			
     			}
     		}
     		if(needed){
-    			limpiarChunkAtZ(source, spawny+1, z,16,0);
+    			limpiarChunkAtZ(source, spawny-1, z,16,0);
     		}
-    		spawny++;
+    		spawny--;
     	}
     }
 
     public static void limpiarChunkOeste(Chunk source,int spawny){
     	for(int x=15;x>=0;x--){
-    		int pase;boolean needed=false;
+    		boolean needed=false;
     		for(int p=0;p<16;p++){
-    			pase=source.getWorld().getHighestBlockYAt(source.getBlock(x, spawny, p).getLocation())-spawny;
-    			if(pase > 2){
-    				needed=true;break;
+    			Block pase= source.getBlock(x, spawny-1, p);
+    			if(pase.getType() == Material.AIR || pase.getType() == Material.LEAVES || pase.getType() == Material.WOOD){
+    				needed=true;break;    			
     			}
     		}
     		if(needed){
-    			limpiarChunkAtX(source, spawny+1, x,16,0);
+    			limpiarChunkAtX(source, spawny-1, x,16,0);
     		}
-    		spawny++;
+    		spawny--;
     	}
     }
 
     public static  void limpiarChunkSur(Chunk source,int spawny){
     	for(int z=15;z>=0;z--){
-    		int pase;boolean needed=false;
+    		boolean needed=false;
     		for(int p=0;p<16;p++){
-    			pase=source.getWorld().getHighestBlockYAt(source.getBlock(p, spawny, z).getLocation())-spawny;
-    			if(pase > 2){
-    				needed=true;break;
+    			Block pase= source.getBlock(p, spawny-1, z);
+    			if(pase.getType() == Material.AIR || pase.getType() == Material.LEAVES || pase.getType() == Material.WOOD){
+    				needed=true;break;    			
     			}
     		}
     		if(needed){
-    				limpiarChunkAtZ(source, spawny+1, z,16,0);
+    				limpiarChunkAtZ(source, spawny-1, z,16,0);
     			}
-    		spawny++;
+    		spawny--;
     	}
     }
     

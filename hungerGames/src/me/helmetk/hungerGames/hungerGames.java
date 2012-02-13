@@ -200,7 +200,7 @@ public class hungerGames extends JavaPlugin{
     						
     						int spawnx = source.getX();
     						int spawnz = source.getZ();
-    						int spawny = mundo1.getHighestBlockYAt(spawnx, spawnz) - 4;
+    						int spawny = mundo1.getHighestBlockYAt(spawnx, spawnz) + 4;
     						
     						//Limpiado de Inicio
     						ChunkUtil.ChunkInicio(source, spawny,"");
