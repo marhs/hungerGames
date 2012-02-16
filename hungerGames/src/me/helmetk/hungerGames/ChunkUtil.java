@@ -9,32 +9,12 @@ import org.bukkit.material.Ladder;
 public class ChunkUtil {
 
     public static void ChunkInicio(Chunk source,int spawny,String direc){
-    	//Chunk Inicio
-    	if(direc == "Inicio"){
-    		ChunkInicio(source, spawny-5, "");
-    	}
-    	
     	for(int x1=0;x1<16;x1++){
 			limpiarChunkAtX(source, spawny, x1,16,0);
 		}
     	
     	if(direc == "Inicio"){
-    		int x=7;int z=7;
-    		Block inicio= source.getBlock(x, spawny, z);
-    		inicio.setType(Material.AIR);
-    		Ladder escalera = new Ladder();
-    		escalera.setFacingDirection(BlockFace.EAST);
-    		for(int y=spawny;y>spawny-5;y--){
-    			//source.getBlock(x-1, y, z).setType(Material.BEDROCK);
-    			//source.getBlock(x+1, y, z).setType(Material.BEDROCK);
-    			source.getBlock(x, y, z-1).setType(Material.BEDROCK);
-    			source.getBlock(x, y, z).setTypeIdAndData(Material.LADDER.getId(), escalera.getData(), false);
-    			//source.getBlock(x, y, z+1).setType(Material.BEDROCK);
-    		}
-    		rellenarChunkAtX(source, 0, 16, 0, spawny, spawny-4);
-    		rellenarChunkAtX(source, 15, 16, 0, spawny, spawny-4);
-    		rellenarChunkAtZ(source, 0, 16, 0, spawny, spawny-4);
-    		rellenarChunkAtZ(source, 15, 16, 0, spawny, spawny-4);
+    		//TODO Estructura Inicial del spawn
     	}
     	//Chunk 1
     	if(direc == "N"){
