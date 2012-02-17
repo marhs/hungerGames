@@ -2,9 +2,8 @@ package me.helmetk.hungerGames;
 
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.material.Ladder;
 
 public class ChunkUtil {
 
@@ -129,7 +128,39 @@ public class ChunkUtil {
     	}
     }
     
-    public static Integer[] semicirculo (Integer radio, Integer ancho){
+    public static void CrearMundoCirculo (Chunk source,Integer desdeY,Integer hastaY,Integer chunks){
+    	Integer[] puntos=semicirculo(chunks, chunks);
+    	World world=source.getWorld();
+    	Chunk no,ne,so,se;
+    	
+    	for(Integer p=0;p<chunks;p++){
+    		//NOROESTE
+    		no=world.getChunkAt(source.getX()-p, source.getZ()+puntos[p]);
+    		//NORESTE
+    		ne=world.getChunkAt(source.getX()+p, source.getZ()+puntos[p]);
+    		//SUROESTE
+    		so=world.getChunkAt(source.getX()-p, source.getZ()-puntos[p]);
+    		//SURESTE
+    		se=world.getChunkAt(source.getX()+p, source.getZ()-puntos[p]);
+    		//RELLENAR CHUNK ENTERO
+    		for(Integer x=0;x<16;x++){
+    			if(p >= chunks/2 && puntos[p-1]-puntos[p] > 1)
+    				for(Integer z1=puntos[p]+1;z1<puntos[p-1];z1++){
+    					rellenarChunkAtX(world.getChunkAt(no.getX()+1, source.getZ()+z1) , x, 16, 0, hastaY, desdeY);
+    					rellenarChunkAtX(world.getChunkAt(ne.getX()-1, source.getZ()+z1) , x, 16, 0, hastaY, desdeY);
+    					rellenarChunkAtX(world.getChunkAt(so.getX()+1, source.getZ()-z1) , x, 16, 0, hastaY, desdeY);
+    					rellenarChunkAtX(world.getChunkAt(se.getX()-1, source.getZ()-z1) , x, 16, 0, hastaY, desdeY);
+    				}
+    			rellenarChunkAtX(no , x, 16, 0, hastaY, desdeY);
+    			rellenarChunkAtX(ne , x, 16, 0, hastaY, desdeY);
+    			rellenarChunkAtX(so , x, 16, 0, hastaY, desdeY);
+    			rellenarChunkAtX(se , x, 16, 0, hastaY, desdeY);
+    		}
+    	}
+    }
+    
+    private static Integer[] semicirculo (Integer radio, Integer ancho){
+    	// Devuelve la coordenada [x]=z
     	Integer[] result = new Integer[ancho];
     	for(Integer x=ancho;x >0;x--){
     		Double a = Math.sqrt(Math.pow(radio, 2) - Math.pow(x, 2));

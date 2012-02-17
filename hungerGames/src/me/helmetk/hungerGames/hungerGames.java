@@ -219,6 +219,9 @@ public class hungerGames extends JavaPlugin{
     						
     						//player.teleport(mundo1.getSpawnLocation());
     						
+    						//Limite del mapa
+    						ChunkUtil.CrearMundoCirculo(source, 0, 128, 15);
+    						
     						preparado=true;
     						
     					
