@@ -99,7 +99,7 @@ public class hungerGames extends JavaPlugin{
     		Player player = (Player) sender;
     		if(args.length == 0) {
     			// s
-    			player.sendMessage("Hunger Games, v0.1 - To start a new game, use /hungerGames start");
+    			player.sendMessage("Hunger Games, v0.1 - Help page: /hungerGames help");
     		} else 
     		if(args.length != 0) {
     			
@@ -250,8 +250,19 @@ public class hungerGames extends JavaPlugin{
     				}
     			}
     			
-    			else 
-    				player.sendMessage("HungerGames start/status/prepare");
+    			else if (args[0].equalsIgnoreCase("help") && args.length == 1 ) {
+    				player.sendMessage("HungerGames v0.1 \n ");
+    				player.sendMessage("Usage: /hungerGames option [args] \n");
+    				player.sendMessage("Args: ");
+    				player.sendMessage(" prepare - Prepare the world for a new game ");
+    				player.sendMessage(" start - Start a new game ");
+    				player.sendMessage(" status - Show the status of a game (and the players alive) ");
+    				player.sendMessage(" stop - Finish the game ");
+
+    				
+    			} else
+    				// Ninguno de los comandos ha sido escrito.
+    				return false;
     			
    
     		}
