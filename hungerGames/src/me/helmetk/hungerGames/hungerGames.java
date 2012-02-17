@@ -234,7 +234,7 @@ public class hungerGames extends JavaPlugin{
     			
     			}
     			if(args[0].equalsIgnoreCase("spectate") && args.length == 2 && !getHG().isMasterPlaying()) {
-    				//Activar desactivar modo espectador
+    				// Activar desactivar modo espectador
     				if(getHG().isActivo()){
     					if(args[1].equalsIgnoreCase("1")){
     						getHG().getEspectador().Next();
@@ -251,6 +251,8 @@ public class hungerGames extends JavaPlugin{
     			}
     			
     			else if (args[0].equalsIgnoreCase("help") && args.length == 1 ) {
+    				/* TODO: Buscar si hay otra forma de hacer esto, como poniendole un \n
+    				 * y que funcione */
     				player.sendMessage("HungerGames v0.1 \n ");
     				player.sendMessage("Usage: /hungerGames option [args] \n");
     				player.sendMessage("Args: ");
