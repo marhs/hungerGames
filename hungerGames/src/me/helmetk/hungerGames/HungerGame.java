@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -22,8 +23,17 @@ public class HungerGame {
 	private Plugin plugin;
 	private Random random = new Random();
 	private int DiasTotal;
+	private Map<Material, Integer> regalos = new HashMap<Material, Integer>();
 	
 	// Getters and setters.
+	public Map<Material, Integer> getRegalos() {
+		return regalos;
+	}
+
+	public void setRegalos(Map<Material, Integer> regalos) {
+		this.regalos = regalos;
+	}
+
 	public boolean isMuertosHoy() {
 		return muertosHoy;
 	}
@@ -108,6 +118,9 @@ public class HungerGame {
 		this.muertos = set2;
 		this.inicio = inicio;
 		this.masterPlays = false;
+		getRegalos().put(Material.BOW, 1); getRegalos().put(Material.BREAD, 3); getRegalos().put(Material.ARROW, 5);
+		getRegalos().put(Material.LEATHER, 5); getRegalos().put(Material.WOOD, 5); getRegalos().put(Material.WOOD_SWORD, 1);
+		getRegalos().put(Material.IRON_SWORD, 1);
 	}
 	
 	// Empieza un juego nuevo. 
@@ -201,5 +214,6 @@ public class HungerGame {
 	
 	public void automatedGift() {
 		// TODO: Hacer aqui el metodo que va dando regalos aleatoriamente.
+		
 	}
 }
