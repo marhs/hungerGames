@@ -91,13 +91,19 @@ public class HungerListener implements Listener{
 	public void onCustomEvent(EventTimeDawn event){
 		if(plugin.getHG().isActivo()){
 		if(event instanceof EventTimeDawn){
-			if( !plugin.getMuertosDiarios().isEmpty() ){
-			String e = "";
-			for(Player p:plugin.getMuertosDiarios()){
-				e += " "+p.getName();
-			}
-			plugin.getMuertosDiarios().clear();
-			plugin.broadcast("The players who died today are:" +e);
+			EventTimeDawn evento=(EventTimeDawn)event;
+			if(evento.getTipo()==EventTimeDawn.TipoEvent.Muertes){	
+				if( !plugin.getMuertosDiarios().isEmpty() ){
+					String e = "";
+					for(Player p:plugin.getMuertosDiarios()){
+						e += " "+p.getName();
+					}
+					plugin.getMuertosDiarios().clear();
+					plugin.broadcast("The players who died today are:" +e);
+				}
+			}else
+			if(evento.getTipo()==EventTimeDawn.TipoEvent.Regalos){
+				//Todo hacer que de los regalos hungergames.automaticGifts ?
 			}
 		}
 		}
