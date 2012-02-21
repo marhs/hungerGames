@@ -269,6 +269,7 @@ public class hungerGames extends JavaPlugin{
     				if(getHG().getMaster().equals(player)){
 						ItemStack items = new ItemStack(new Integer(args[1]), new Integer(args[2]));
     					ChunkUtil.regalo(getWorld1().getSpawnLocation(), items);
+    					broadcast("There are new gifts!");
     				}
     			}
     			
