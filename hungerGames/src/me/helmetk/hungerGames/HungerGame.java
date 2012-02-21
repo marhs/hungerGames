@@ -15,17 +15,23 @@ import spectator.spectatorListeners;
 public class HungerGame {
 	private Logger log = Logger.getLogger("Minecraft");
 	private Set<Player> vivos, muertos;
-	private boolean activo;
+	private boolean activo, masterPlays, movementAllowed, muertosHoy;
 	private Location inicio;
 	private Player master;
-	private boolean masterPlays;
-	private boolean movementAllowed;
 	private Spectator espectador;
 	private Plugin plugin;
 	private Random random = new Random();
-	private int DiaLimite,Dias,DiasTotal;
+	private int DiasTotal;
 	
 	// Getters and setters.
+	public boolean isMuertosHoy() {
+		return muertosHoy;
+	}
+
+	public void setMuertosHoy(boolean muertosHoy) {
+		this.muertosHoy = muertosHoy;
+	}
+	
 	public int getDiasTotal() {
 		return DiasTotal;
 	}
@@ -33,23 +39,7 @@ public class HungerGame {
 	private void setDiasTotal(int diasTotal) {
 		DiasTotal = diasTotal;
 	}
-
-	public int getDias() {
-		return Dias;
-	}
-
-	public void setDias(int dias) {
-		Dias = dias;
-	}
-
-	public int getDiaLimite() {
-		return DiaLimite;
-	}
-
-	private void setDiaLimite(int diaLimite) {
-		DiaLimite = diaLimite;
-	}
-
+	
 	public boolean isMovementAllowed() {
 		return movementAllowed;
 	}
@@ -125,9 +115,7 @@ public class HungerGame {
 		setMaster(master);
 		setVivos(players);
 		setInicio(inicio);
-		setDias(0);
 		setDiasTotal(0);
-		setDiaLimite(random.nextInt()%5 + 1);
 		for(Player p:getVivos()) {
 			//p.teleport(inicio);
 			p.setExp(0);
@@ -204,14 +192,12 @@ public class HungerGame {
 	
 	public void DiaSiguiente() {
 		setDiasTotal(getDiasTotal()+1);
-		setDias(getDias()+1);
-		if(getDias()==getDiaLimite()){
-			plugin.getServer().getPluginManager().callEvent(new EventTimeDawn(EventTimeDawn.TipoEvent.Regalos));
-			setDias(0);
-			setDiaLimite(random.nextInt()%5 + 1);
+		if(isMuertosHoy()!=true){
+			if(random.nextInt()%2 == 1){
+				plugin.getServer().getPluginManager().callEvent(new EventTimeDawn(EventTimeDawn.TipoEvent.Regalos));
+			}
 		}
 	}
-	
 	
 	public void automatedGift() {
 		// TODO: Hacer aqui el metodo que va dando regalos aleatoriamente.
