@@ -172,5 +172,7 @@ public class HungerGame {
 		}
 	}
 	
-	
+	public void automatedGift() {
+		// TODO: Hacer aqui el metodo que va dando regalos aleatoriamente.
+	}
 }

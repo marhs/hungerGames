@@ -265,7 +265,14 @@ public class hungerGames extends JavaPlugin{
     				player.sendMessage(" stop - Finish the game ");
 
     				
-    			} else
+    			} else if(args[0].equalsIgnoreCase("gift") && args.length == 3)  {
+    				if(getHG().getMaster().equals(player)){
+						ItemStack items = new ItemStack(new Integer(args[1]), new Integer(args[2]));
+    					ChunkUtil.regalo(getWorld1().getSpawnLocation(), items);
+    				}
+    			}
+    			
+    			else
     				// Ninguno de los comandos ha sido escrito.
     				return false;
     			

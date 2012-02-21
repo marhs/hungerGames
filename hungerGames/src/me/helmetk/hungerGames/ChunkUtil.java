@@ -1,9 +1,13 @@
 package me.helmetk.hungerGames;
 
+
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.ContainerBlock;
+import org.bukkit.inventory.ItemStack;
 
 public class ChunkUtil {
 
@@ -202,5 +206,11 @@ public class ChunkUtil {
 			//result[(x1 * 16 + z1) * 128 + spawny]=(byte)Material.BEDROCK.getId();
 			for(int y=desdeY;y<hastaY;y++)source.getBlock(z1, y,Z).setType(Material.BEDROCK);
 		}
+    }
+    public static void regalo(Location loc, ItemStack items){
+    	if(!loc.getBlock().getType().equals(Material.CHEST))
+    		loc.getBlock().setType(Material.CHEST);
+    	ContainerBlock chest = (ContainerBlock)loc.getBlock().getState();
+    	chest.getInventory().addItem(items);
     }
 }
