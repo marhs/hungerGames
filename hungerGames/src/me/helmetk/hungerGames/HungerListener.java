@@ -103,7 +103,7 @@ public class HungerListener implements Listener{
 				}
 			}else
 			if(evento.getTipo()==EventTimeDawn.TipoEvent.Regalos){
-				//Todo hacer que de los regalos hungergames.automaticGifts ?
+				plugin.getHG().automatedGift();
 			}
 		}
 		}

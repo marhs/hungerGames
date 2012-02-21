@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import spectator.Spectator;
@@ -213,7 +214,10 @@ public class HungerGame {
 	}
 	
 	public void automatedGift() {
-		// TODO: Hacer aqui el metodo que va dando regalos aleatoriamente.
-		
+		int regalosHoy = random.nextInt()%(getRegalos().keySet().size())+1;
+		for(int x = 0; x<regalosHoy; x++){
+			Material objeto = ((List<Material>)(getRegalos().keySet())).get(random.nextInt()%(getRegalos().keySet().size()));
+			ChunkUtil.regalo(inicio.add(0, 0, -1), new ItemStack(objeto.getId(), getRegalos().get(objeto)));
+		}
 	}
 }
