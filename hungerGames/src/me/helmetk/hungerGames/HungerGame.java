@@ -22,8 +22,34 @@ public class HungerGame {
 	private boolean movementAllowed;
 	private Spectator espectador;
 	private Plugin plugin;
+	private Random random = new Random();
+	private int DiaLimite,Dias,DiasTotal;
 	
 	// Getters and setters.
+	public int getDiasTotal() {
+		return DiasTotal;
+	}
+
+	private void setDiasTotal(int diasTotal) {
+		DiasTotal = diasTotal;
+	}
+
+	public int getDias() {
+		return Dias;
+	}
+
+	public void setDias(int dias) {
+		Dias = dias;
+	}
+
+	public int getDiaLimite() {
+		return DiaLimite;
+	}
+
+	private void setDiaLimite(int diaLimite) {
+		DiaLimite = diaLimite;
+	}
+
 	public boolean isMovementAllowed() {
 		return movementAllowed;
 	}
@@ -99,6 +125,9 @@ public class HungerGame {
 		setMaster(master);
 		setVivos(players);
 		setInicio(inicio);
+		setDias(0);
+		setDiasTotal(0);
+		setDiaLimite(random.nextInt()%5 + 1);
 		for(Player p:getVivos()) {
 			//p.teleport(inicio);
 			p.setExp(0);
@@ -171,6 +200,18 @@ public class HungerGame {
 			espectador.SpectatorVisible();
 		}
 	}
+	//Funcion que controla los dias
+	
+	public void DiaSiguiente() {
+		setDiasTotal(getDiasTotal()+1);
+		setDias(getDias()+1);
+		if(getDias()==getDiaLimite()){
+			plugin.getServer().getPluginManager().callEvent(new EventTimeDawn(EventTimeDawn.TipoEvent.Regalos));
+			setDias(0);
+			setDiaLimite(random.nextInt()%5 + 1);
+		}
+	}
+	
 	
 	public void automatedGift() {
 		// TODO: Hacer aqui el metodo que va dando regalos aleatoriamente.

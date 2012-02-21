@@ -13,8 +13,12 @@ class EventTimeDawn extends Event{
 	
     private static final HandlerList handlers = new HandlerList();
     
-    public EventTimeDawn (){
+    enum TipoEvent{Muertes,Regalos};
+    private TipoEvent tipo;
+    
+    public EventTimeDawn (TipoEvent te){
     	super();
+    	setTipo(te);
     }
     
     public HandlerList getHandlers() {
@@ -24,6 +28,14 @@ class EventTimeDawn extends Event{
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
+	public TipoEvent getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoEvent tipo) {
+		this.tipo = tipo;
+	}
     
     
 }

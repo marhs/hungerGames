@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
+import me.helmetk.hungerGames.EventTimeDawn.TipoEvent;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -377,10 +378,11 @@ public class hungerGames extends JavaPlugin{
 					Long Hora=world1.getTime();
 					
 					if( Hora == 18000 && getMensajeDelDia() == false){
-						getServer().getPluginManager().callEvent(new EventTimeDawn());
+						getServer().getPluginManager().callEvent(new EventTimeDawn(TipoEvent.Muertes));
 					}
 					if( getMensajeDelDia() == true && Hora >0 && Hora < 1000){
 						setMensajeDelDia(false);
+						getHG().DiaSiguiente();
 					}
 				}
 			}, 0, 1);
