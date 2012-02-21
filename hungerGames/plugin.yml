@@ -7,3 +7,7 @@ commands:
     description: Play the Hunger Games!
     permission: hungerGames.hungergames
     usage: User /hungergames help to the Help page.
+  hg:
+    description: Play the Hunger Games!
+    permission: hungerGames.hungergames
+    usage: User /hungergames help to the Help page.

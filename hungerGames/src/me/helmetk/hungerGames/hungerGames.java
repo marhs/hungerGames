@@ -86,7 +86,7 @@ public class hungerGames extends JavaPlugin{
     	this.hg = hg;
     }
 
-    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
+    public boolean onCommand(CommandSender sender, final Command cmd, String commandLabel, String[] args){
     	
     	// Check if the sender is a player
     	if(!(sender instanceof Player))
@@ -95,7 +95,17 @@ public class hungerGames extends JavaPlugin{
     	/* El nombre del comando es "hungerGames", que si se escribe solo /hungerGames
     	 * te devuelve la descripcion del plugin, despues definimos los comandos como
     	 * por ejemplo "/hungerGames start" */
-    	if(cmd.getName().equalsIgnoreCase("hungerGames")){
+    	if(cmd.getName().equalsIgnoreCase("hg")){
+    		Command com = new Command("hungerGames") {
+				
+				@Override
+				public boolean execute(CommandSender arg0, String arg1, String[] arg2) {
+					return cmd.execute(arg0, arg1, arg2);
+				}
+			};
+    		onCommand(sender, com, commandLabel, args);
+    	}
+    	else if(cmd.getName().equalsIgnoreCase("hungerGames")){
     		Player player = (Player) sender;
     		if(args.length == 0) {
     			// s
