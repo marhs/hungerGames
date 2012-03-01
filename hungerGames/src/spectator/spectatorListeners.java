@@ -1,9 +1,5 @@
 package spectator;
 
-import net.minecraft.server.EntityHuman;
-import net.minecraft.server.Packet20NamedEntitySpawn;
-import net.minecraft.server.Packet29DestroyEntity;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,12 +40,14 @@ public class spectatorListeners implements Listener {
 				sp.getSpectator().getInventory().setArmorContents(event.getPlayer().getInventory().getArmorContents());
 
 				for (Player p : sp.getSpectated().getWorld().getPlayers()) {
-					//Destruimos al espectador a todos 
-					sp.getEntidad(p).netServerHandler.sendPacket(new Packet29DestroyEntity(sp.getSpectator().getEntityId()));
+					//Destruimos al espectador a todos
+					p.hidePlayer(sp.getSpectator());
+					//sp.getEntidad(p).netServerHandler.sendPacket(new Packet29DestroyEntity(sp.getSpectator().getEntityId()));
 	            
 				}
 	            //Destruimos al spectated del spectador
-				sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet29DestroyEntity(event.getPlayer().getEntityId()));
+				sp.getSpectator().hidePlayer(event.getPlayer());
+				//sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet29DestroyEntity(event.getPlayer().getEntityId()));
 
 			}
 
@@ -65,12 +63,14 @@ public class spectatorListeners implements Listener {
 		
 					for (Player p : event.getPlayer().getWorld().getPlayers()) {
 						//Destruimos a todos el espectator
-						sp.getEntidad(p).netServerHandler.sendPacket(new Packet29DestroyEntity(event.getPlayer().getEntityId()));
+						p.hidePlayer(sp.getSpectator());
+						//sp.getEntidad(p).netServerHandler.sendPacket(new Packet29DestroyEntity(event.getPlayer().getEntityId()));
 
 					}
 		
 					if(sp.getSpectated()!=null && sp.getSpectated().isOnline())
-						sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet29DestroyEntity(sp.getSpectated().getEntityId()));	
+						sp.getSpectator().hidePlayer(sp.getSpectated());
+						//sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet29DestroyEntity(sp.getSpectated().getEntityId()));	
 
 				}
 
@@ -86,7 +86,8 @@ public class spectatorListeners implements Listener {
 		if (sp.isActivo()) {
 		
 			if (sp.getSpectated() == event.getPlayer()) {
-				sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman) sp.getSpectated()));
+				//sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman) sp.getSpectated()));
+				sp.getSpectator().showPlayer(sp.getSpectated());
 				sp.Next();
 			}
 		}
@@ -165,7 +166,8 @@ public class spectatorListeners implements Listener {
 			if (sp.isActivo()) {
 
 				if (sp.getSpectated() == pla && sp.getSpectated() != null) {
-					sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman)pla));
+					//sp.getEntidad(sp.getSpectator()).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman)pla));
+					sp.getSpectator().showPlayer(sp.getSpectated());
 					sp.Next();
 				}
 			}

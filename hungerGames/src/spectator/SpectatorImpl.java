@@ -2,9 +2,7 @@ package spectator;
 
 import java.util.List;
 
-import net.minecraft.server.EntityHuman;
 import net.minecraft.server.EntityPlayer;
-import net.minecraft.server.Packet20NamedEntitySpawn;
 
 import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.entity.Entity;
@@ -73,9 +71,11 @@ public class SpectatorImpl implements Spectator{
 	@Override
 	public void SpectatorVisible() {
 		for(Player p:spectator.getWorld().getPlayers()){
-			getEntidad(p).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman) spectator));
+			p.showPlayer(getSpectator());
+			//getEntidad(p).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman) spectator));
 		}
-		getEntidad(spectator).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman) spectated));
+		//getEntidad(spectator).netServerHandler.sendPacket(new Packet20NamedEntitySpawn((EntityHuman) spectated));
+		getSpectator().showPlayer(getSpectated());
 		
 	}
 	
