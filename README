@@ -4,7 +4,7 @@ Marco Herrero <hielo.helado@gmail.com>
 
 Play the Hunger Games in your bukkit server.
 
-To start a new game, first you have to genereta a new world. Use:
+To start a new game, first you have to generate a new world. Use:
 
 /hungerGames prepare
 
